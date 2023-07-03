@@ -1,19 +1,50 @@
-.content-a {
+.wrapper-sideBar {
     position: sticky;
     top: 10px;
-    background-color: white;
+
     overflow: auto;
     max-height: 100vh;
 }
 
 /* Ẩn thanh cuộn trên tất cả các trình duyệt */
-.content-a::-webkit-scrollbar {
+.wrapper-sideBar::-webkit-scrollbar {
     display: none;
     /* Ẩn thanh cuộn trên Chrome, Safari và các trình duyệt dựa trên WebKit */
 }
 
 /* Ẩn thanh cuộn trên Firefox */
-.content-a {
+.wrapper-sideBar {
     scrollbar-width: none;
     scrollbar-color: transparent transparent;
+}
+
+.wrapper-item-sidebar {
+    background-color: white;
+    border-radius: 5px;
+}
+
+.item-sidebar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    &:hover {
+        background: rgba(39, 39, 42, 0.12);
+    }
+}
+
+.image-sidebar {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.text-item-sidebar {
+    font-weight: 400;
+        font-size: 14px;
+        line-height: 150%;
+        color: rgb(13, 13, 14);
 }

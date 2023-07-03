@@ -1,0 +1,57 @@
+.text-title-footer {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: rgb(56, 56, 61);
+}
+
+.text-content-footer {
+    color: rgb(128, 128, 137);
+    font-size: 13px;
+    
+}
+
+.no-right-padding-footer-aboutTiki {
+    padding-right: 0 !important;
+}
+
+.certification-footer {
+    width: 37px;
+}
+.image-method-footer {
+    width: 30px;
+    object-fit: cover;
+}
+
+.wrapper-image-method-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.text-title-delyver-footer {
+    font-size: 15px;
+        line-height: 24px;
+        font-weight: 600;
+        color: rgb(56, 56, 61);
+}
+
+.image-tikiNow-footer {
+    width: 75%;
+    object-fit: cover;
+}
+.image-facebook-footer {
+    width: 32px;
+    height: 32px;
+}
+.image-youtube-footer {
+    width: 40px;
+    height: 40px;
+}
+.image-zalo-footer {
+    width: 32px;
+    height: 32px;
+}
+.img-QRcode-footer {
+    width: 35%;
+}

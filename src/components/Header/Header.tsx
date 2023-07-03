@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import "./Header.scss";
-import { Input, Button, Badge } from "antd";
+import { Input, Button, Badge, Modal } from "antd";
 import {
   SearchOutlined,
   HomeOutlined,
@@ -10,6 +10,9 @@ import {
   EnvironmentOutlined,
 } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import Login from "../Login/Login";
+import SignUp from "../Signup/SignUp";
 
 const typeProducts = [
   {
@@ -31,6 +34,26 @@ const typeProducts = [
 ];
 
 const Header = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const toggleLogin = () => {
+    setIsLogin(!isLogin);
+  };
+
+  const titleModal = <div className="text-title-modal-header">Xin Chào,</div>;
+
   return (
     <Container>
       <Row className="p-2">
@@ -56,10 +79,13 @@ const Header = () => {
               <RocketOutlined />
               Astra
             </NavLink>
-            <NavLink to={"profile"} className="item-menu-header">
+            {/* <NavLink to={"profile"} className="item-menu-header">
               <SmileOutlined />
               Tài khoản
-            </NavLink>
+            </NavLink> */}
+            <div className="item-menu-header " onClick={showModal}>
+              Tài khoản
+            </div>
           </div>
 
           <div>
@@ -90,6 +116,47 @@ const Header = () => {
           </div>
         </Col>
       </Row>
+
+      <Modal
+        title={titleModal}
+        visible={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        width={700}
+        // footer={[
+        //   <Button key="back" onClick={handleCancel}>
+        //     Hủy
+        //   </Button>,
+        //   <Button key="submit" type="primary" onClick={handleOk}>
+        //     Xác nhận
+        //   </Button>,
+        // ]}
+      >
+        {/* {isLogin ? (
+          <div>
+            <div className="text-switch-acount-header" onClick={toggleLogin}>
+              Tạo tài khoản
+            </div>
+            <Login />
+          </div>
+        ) : (
+          <div>
+            <div className="text-switch-acount-header" onClick={toggleLogin}>
+              Đăng nhập
+            </div>
+            <SignUp />
+          </div>
+        )} */}
+
+        <Row>
+          <Col md={8} className="order-2 order-md-1">
+            a
+          </Col>
+          <Col md={4} className="order-1 order-md-2">
+            b
+          </Col>
+        </Row>
+      </Modal>
     </Container>
   );
 };
