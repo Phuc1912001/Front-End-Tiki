@@ -1,0 +1,19 @@
+.content-a {
+    position: sticky;
+    top: 10px;
+    background-color: white;
+    overflow: auto;
+    max-height: 100vh;
+}
+
+/* Ẩn thanh cuộn trên tất cả các trình duyệt */
+.content-a::-webkit-scrollbar {
+    display: none;
+    /* Ẩn thanh cuộn trên Chrome, Safari và các trình duyệt dựa trên WebKit */
+}
+
+/* Ẩn thanh cuộn trên Firefox */
+.content-a {
+    scrollbar-width: none;
+    scrollbar-color: transparent transparent;
+}

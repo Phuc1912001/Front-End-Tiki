@@ -1,0 +1,128 @@
+/* Header.scss */
+
+.ant-input-search-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.anticon-search {
+    margin-left: 15px;
+}
+
+.logo-phucki {
+    color: #0060ff;
+    font-size: 1.4rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+}
+
+.search-group {
+    border: 1px solid rgb(221, 221, 227);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-search {
+    border: none;
+    &:focus-within {
+        box-shadow: none;
+        border-color: #ddd;
+    }
+    border-radius: 0px;
+    border-right: 1px solid rgb(221, 221, 227);
+}
+.button-search {
+    border: none;
+    box-shadow: none;
+    height: 40px;
+    &:hover {
+        background-color: rgb(206, 225, 255);
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+}
+
+.wrapper-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.menu-group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.item-menu-header {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 5px;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 150%;
+    color: rgb(128, 128, 137);
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    &:hover {
+        background-color: #ddd;
+    }
+}
+.order-header {
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+}
+.active {
+    color: rgb(0, 96, 255);
+    .order-header {
+        color: rgb(0, 96, 255);
+    }
+    &:hover {
+        background-color: rgba(0, 96, 255, 0.12);
+        .ant-badge {
+            background-color: rgba(0, 96, 255, 0.12);
+        }
+    }
+}
+
+.wrapper-product-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.text-product-header {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    color: rgb(128, 128, 137);
+    cursor: pointer;
+}
+
+.text-address-header {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 2px;
+    color: rgb(128, 128, 137);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    cursor: pointer;
+    span {
+        text-decoration: underline;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 150%;
+        white-space: nowrap;
+
+        color: rgb(39, 39, 42);
+    }
+}
