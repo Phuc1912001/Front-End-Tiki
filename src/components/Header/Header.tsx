@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import "./Header.scss";
-import { Input, Button, Badge, Modal } from "antd";
+import { Input, Button, Badge, Modal, Popover } from "antd";
 import {
   SearchOutlined,
   HomeOutlined,
@@ -13,6 +13,9 @@ import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import Login from "../Login/Login";
 import SignUp from "../Signup/SignUp";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../Redux/type";
+import { resetUser } from "../../Redux/Feature/userSlice";
 
 const typeProducts = [
   {
@@ -37,6 +40,8 @@ const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
 
+  const dispatch = useDispatch<AppDispatch>();
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -52,7 +57,17 @@ const Header = () => {
     setIsLogin(!isLogin);
   };
 
-  const titleModal = <div className="text-title-modal-header">Xin Chào,</div>;
+  const handleLogOut = () => {
+    dispatch(resetUser());
+  };
+
+  const content = (
+    <div>
+      <div>Thông Tin Tài Khoản</div>
+      <div>Đơn Hàng Của Tôi</div>
+      <div onClick={handleLogOut}>Log out</div>
+    </div>
+  );
 
   return (
     <Container>
@@ -79,13 +94,13 @@ const Header = () => {
               <RocketOutlined />
               Astra
             </NavLink>
-            {/* <NavLink to={"profile"} className="item-menu-header">
-              <SmileOutlined />
-              Tài khoản
-            </NavLink> */}
-            <div className="item-menu-header " onClick={showModal}>
-              Tài khoản
-            </div>
+
+            <Popover content={content}>
+              <div className="item-menu-header " onClick={showModal}>
+                <SmileOutlined />
+                Tài khoản
+              </div>
+            </Popover>
           </div>
 
           <div>
@@ -118,42 +133,70 @@ const Header = () => {
       </Row>
 
       <Modal
-        title={titleModal}
         visible={isModalOpen}
-        onOk={handleOk}
+        // onOk={handleOk}
         onCancel={handleCancel}
         width={700}
-        // footer={[
-        //   <Button key="back" onClick={handleCancel}>
-        //     Hủy
-        //   </Button>,
-        //   <Button key="submit" type="primary" onClick={handleOk}>
-        //     Xác nhận
-        //   </Button>,
-        // ]}
+        footer={false}
       >
-        {/* {isLogin ? (
-          <div>
-            <div className="text-switch-acount-header" onClick={toggleLogin}>
-              Tạo tài khoản
+        <Row className="m-0">
+          <Col md={8} className="p-5">
+            <div className="text-title-modal-header ">Xin Chào,</div>
+            {isLogin ? (
+              <div>
+                <div
+                  className="text-switch-acount-header mb-2"
+                  onClick={toggleLogin}
+                >
+                  Tạo tài khoản
+                </div>
+                <Login handleCancel={handleCancel} />
+              </div>
+            ) : (
+              <div>
+                <div
+                  className="text-switch-acount-header"
+                  onClick={toggleLogin}
+                >
+                  Đăng nhập
+                </div>
+                <SignUp toggleLogin={toggleLogin} />
+              </div>
+            )}
+            <div className="social-heading mt-4">
+              <span className="flex-grow-1" />
+              <div className="mx-2">Hoặc tiếp tục bằng</div>
+              <span className="flex-grow-1" />
             </div>
-            <Login />
-          </div>
-        ) : (
-          <div>
-            <div className="text-switch-acount-header" onClick={toggleLogin}>
-              Đăng nhập
+            <div className="d-flex justify-content-center align-items-center gap-3 mt-3">
+              <img
+                src="https://salt.tikicdn.com/ts/upload/3a/22/45/0f04dc6e4ed55fa62dcb305fd337db6c.png"
+                className="img-fluid image-social-modal"
+                alt=""
+              />
+              <img
+                src="https://salt.tikicdn.com/ts/upload/1c/ac/e8/141c68302262747f5988df2aae7eb161.png"
+                className="img-fluid image-social-modal"
+                alt=""
+              />
             </div>
-            <SignUp />
-          </div>
-        )} */}
-
-        <Row>
-          <Col md={8} className="order-2 order-md-1">
-            a
+            <div className="text-access-modal mt-3">
+              bằng việc tiếp tục bạn ,đã chấp nhận
+              <span>điều khoản sử dụng</span>
+            </div>
           </Col>
-          <Col md={4} className="order-1 order-md-2">
-            b
+          <Col md={4} className="right-modal-header">
+            <img
+              src="https://salt.tikicdn.com/ts/upload/eb/f3/a3/25b2ccba8f33a5157f161b6a50f64a60.png"
+              className="img-fluid"
+              alt=""
+            />
+            <div className="text-center text-title-right-modal-header ">
+              Mua sắm tại PhucKi
+            </div>
+            <div className="text-center text-content-right-modal-header">
+              Siêu ưu đãi mỗi ngày
+            </div>
           </Col>
         </Row>
       </Modal>

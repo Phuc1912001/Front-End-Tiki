@@ -1,0 +1,52 @@
+// Styles for the input fields
+
+.input-control {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.ant-input-password {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+
+    &:focus {
+        box-shadow: none;
+    }
+    &.has-error {
+        box-shadow: none; // Optional: Add a box-shadow on error
+    }
+}
+
+.btn-login {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 66, 78);
+    &:hover {
+        background-color: rgb(255, 66, 78) !important;
+        opacity: 0.8;
+    }
+}
+
+.ant-form-item-label {
+    label::after {
+        display: inline-block;
+        content: "*";
+        margin-left: 4px;
+        color: red;
+    }
+}
