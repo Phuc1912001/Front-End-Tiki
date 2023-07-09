@@ -1,22 +1,13 @@
 .image-carousel {
-    object-fit: contain;
-    border-radius: 15px;
+  object-fit: contain;
+  border-radius: 15px;
 }
 .slick-dots,
 .slick-dots-bottom {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 .image-near-carousel {
-    height: 100% !important;
-    border-radius: 15px;
+  height: 100% !important;
+  border-radius: 15px;
 }
-
-.product-wrapper {
-    padding: 1px;
-    background-color: white;
-}
-.no-left-padding-product {
-    padding-left: 0 !important;
-}
-
