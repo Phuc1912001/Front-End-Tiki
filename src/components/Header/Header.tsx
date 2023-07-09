@@ -9,13 +9,14 @@ import {
   ShoppingCartOutlined,
   EnvironmentOutlined,
 } from "@ant-design/icons";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Login from "../Login/Login";
 import SignUp from "../Signup/SignUp";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../Redux/type";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../Redux/type";
 import { resetUser } from "../../Redux/Feature/userSlice";
+import * as message from "../Message/Message";
 
 const typeProducts = [
   {
@@ -38,9 +39,13 @@ const typeProducts = [
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [isLogin, setIsLogin] = useState(true);
 
+  const user: any = useSelector<RootState>((store) => store.user);
   const dispatch = useDispatch<AppDispatch>();
+
+  const nav = useNavigate();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -59,13 +64,47 @@ const Header = () => {
 
   const handleLogOut = () => {
     dispatch(resetUser());
+    message.success("Logout successfully");
+  };
+
+  const handleNavToProfile = () => {
+    nav("profile");
+  };
+
+  const handelNavToMyOrder = () => {
+    nav("my-order");
+  };
+
+  const handleNavToAdminPage = () => {
+    nav("system/admin");
   };
 
   const content = (
     <div>
-      <div>Thông Tin Tài Khoản</div>
-      <div>Đơn Hàng Của Tôi</div>
-      <div onClick={handleLogOut}>Log out</div>
+      <div
+        className="item-content-popover-header p-1"
+        onClick={handleNavToProfile}
+      >
+        Thông Tin Tài Khoản
+      </div>
+      {user?.isAdmin && (
+        <div
+          className="item-content-popover-header p-1"
+          onClick={handleNavToAdminPage}
+        >
+          Quản Lý Hệ Thống
+        </div>
+      )}
+
+      <div
+        className="item-content-popover-header p-1"
+        onClick={handelNavToMyOrder}
+      >
+        Đơn Hàng Của Tôi
+      </div>
+      <div className="item-content-popover-header p-1" onClick={handleLogOut}>
+        Log out
+      </div>
     </div>
   );
 
@@ -94,13 +133,19 @@ const Header = () => {
               <RocketOutlined />
               Astra
             </NavLink>
-
-            <Popover content={content}>
+            {user?.email ? (
+              <Popover content={content}>
+                <div className="item-menu-header ">
+                  <SmileOutlined />
+                  Tài khoản
+                </div>
+              </Popover>
+            ) : (
               <div className="item-menu-header " onClick={showModal}>
                 <SmileOutlined />
                 Tài khoản
               </div>
-            </Popover>
+            )}
           </div>
 
           <div>
@@ -133,8 +178,8 @@ const Header = () => {
       </Row>
 
       <Modal
-        visible={isModalOpen}
         // onOk={handleOk}
+        open={isModalOpen}
         onCancel={handleCancel}
         width={700}
         footer={false}

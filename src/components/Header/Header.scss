@@ -197,6 +197,14 @@
     }
 }
 
+.item-content-popover-header {
+    cursor: pointer;
+    &:hover {
+    color: #0060ff;
+    
+    }
+}
+
 // Media query for mobile devices (up to 767px)
 @media (max-width: 767px) {
     // Điều chỉnh CSS tại đây nếu bạn muốn thay đổi hiển thị trên mobile

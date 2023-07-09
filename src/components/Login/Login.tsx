@@ -22,14 +22,20 @@ const Login = ({ handleCancel }: IPropsLogin) => {
   const onFinish = async (values: IValuesLogin) => {
     try {
       const acountLogin = await api.post("/user/sign-in", values);
+      console.log("acountLogin", acountLogin);
+
       if (acountLogin?.data?.access_token) {
         const decoded: any = jwt_decode(acountLogin?.data?.access_token);
         if (decoded?.id) {
           handleGetDetailsUser(decoded?.id, acountLogin?.data?.access_token);
         }
       }
-      handleCancel();
-      message.success("Login is successfully");
+      if (acountLogin?.data?.status === "ERR") {
+        message.error(`${acountLogin?.data?.message}`);
+      } else {
+        handleCancel();
+        message.success("Login is successfully");
+      }
     } catch (error) {
       message.error(`${error}`);
     }
@@ -53,25 +59,21 @@ const Login = ({ handleCancel }: IPropsLogin) => {
   // ...
 
   // Custom validator function for email
-  const validateEmail = (rule: any, value: string, callback: any) => {
+  const validateEmail = async (rule: any, value: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!value) {
-      callback("Email is required!"); // Check if the field is empty
+      throw new Error("Email is required!"); // Check if the field is empty
     } else if (!emailRegex.test(value)) {
-      callback("Please enter a valid email address!"); // Check if the value is a valid email format
-    } else {
-      callback(); // No error
+      throw new Error("Please enter a valid email address!"); // Check if the value is a valid email format
     }
   };
 
   // Custom validator function for password
-  const validatePassword = (rule: any, value: string, callback: any) => {
+  const validatePassword = async (rule: any, value: string) => {
     if (!value) {
-      callback("Password is required!"); // Check if the field is empty
+      throw new Error("Password is required!"); // Check if the field is empty
     } else if (value.trim() === "") {
-      callback("Password cannot be empty!"); // Check if the value contains only spaces
-    } else {
-      callback(); // No error
+      throw new Error("Password cannot be empty!"); // Check if the value contains only spaces
     }
   };
 

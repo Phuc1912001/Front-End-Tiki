@@ -24,7 +24,7 @@ export const userSlide = createSlice({
             state.phone = phone ? phone : state.phone;
             state.avatar = avatar ? avatar : state.avatar;
             state.id = _id ? _id : state.id
-            state.isAdmin = isAdmin ? isAdmin : state.isAdmin;
+            state.isAdmin = isAdmin;
             state.access_token = access_token
         },
         resetUser: (state) => {
@@ -35,6 +35,8 @@ export const userSlide = createSlice({
             state.phone = '';
             state.avatar = '';
             state.access_token = '';
+            state.isAdmin = false;
+
         },
     },
 })
