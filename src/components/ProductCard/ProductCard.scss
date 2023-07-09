@@ -1,0 +1,65 @@
+.product-wrapper {
+  padding: 1px;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.name-product {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 150%;
+  color: rgb(39, 39, 42);
+}
+
+.text-rate-product,
+.text-sold-product {
+  color: rgb(128, 128, 137);
+  line-height: 150%;
+  font-size: 14px;
+}
+
+.start-rate-product {
+  font-size: 0.8rem;
+  color: rgb(253, 216, 54);
+}
+
+.text-price-product {
+  color: rgb(255, 66, 78);
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+.text-discount-product {
+  line-height: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(255, 66, 78);
+}
+
+.text-give-product {
+  color: rgb(128, 128, 137);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  min-height: 30px;
+}
+
+.text-time-delevery-product {
+  border-top: 1px solid rgb(220, 220, 225);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: rgb(128, 128, 137);
+}
+
+.text-content-badged-product {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
