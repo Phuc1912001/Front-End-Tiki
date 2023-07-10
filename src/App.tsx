@@ -10,6 +10,7 @@ import MyOrder from "./Pages/MyOrder/MyOrder";
 import AdminPage from "./Pages/AdminPage/AdminPage";
 import { useSelector } from "react-redux";
 import { RootState } from "./Redux/type";
+import ProductDetail from "./Pages/ProductDetail/ProductDetail";
 
 function App() {
   const user = useSelector((state: RootState) => state.user);
@@ -20,7 +21,6 @@ function App() {
     <div>you are not admin</div>
   );
   console.log("user.isAdmin", user.isAdmin);
-  
 
   const router = createBrowserRouter([
     {
@@ -50,6 +50,10 @@ function App() {
         {
           path: "system/admin",
           element: adminElement,
+        },
+        {
+          path: "product-detail/:id",
+          element: <ProductDetail />,
         },
       ],
     },

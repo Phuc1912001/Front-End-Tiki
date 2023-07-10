@@ -4,6 +4,7 @@ import { StarFilled, CheckOutlined } from "@ant-design/icons";
 import "./ProductCard.scss";
 import { IProduct } from "../../Type&Interface/ProductType";
 import { NavLink } from "react-router-dom";
+import { formattedDate } from "../../services/formatDate";
 
 interface IpropProduct {
   product: IProduct;
@@ -11,21 +12,6 @@ interface IpropProduct {
 
 const ProductCard = ({ product }: IpropProduct) => {
   console.log("products in product card ", product);
-
-  const moment = require("moment");
-  require("moment/locale/vi"); // Import locale tiếng Việt
-
-  // Thiết lập ngôn ngữ là tiếng Việt
-  moment.locale("vi");
-
-  // Lấy ngày hôm nay
-  const today = moment();
-
-  // Tính toán ngày cách xa 4 ngày
-  const futureDate = today.clone().add(4, "days");
-
-  // Render thứ, ngày và tháng của ngày cách xa 4 ngày
-  const formattedDate = futureDate.format(`dddd, [ngày] DD/MM`);
 
   const ContentBadgeOfficial = (
     <div className="text-content-badged-product">
@@ -35,8 +21,11 @@ const ProductCard = ({ product }: IpropProduct) => {
   );
 
   return (
-    <Col md={3} className="mt-3" key={product._id}>
-      <NavLink to={`${product._id}`}>
+    <Col md={3} sm={6} xs={6} className="mt-3" key={product._id}>
+      <NavLink
+        to={`product-detail/${product._id}`}
+        className="nav-product-detail"
+      >
         <Badge.Ribbon text={ContentBadgeOfficial} placement="start">
           <div className="product-wrapper p-2">
             <img

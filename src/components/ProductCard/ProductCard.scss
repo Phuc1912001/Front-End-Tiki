@@ -1,3 +1,7 @@
+.nav-product-detail {
+  text-decoration: none;
+}
+
 .product-wrapper {
   padding: 1px;
   background-color: white;
@@ -62,4 +66,35 @@
   align-items: center;
   justify-content: center;
   gap: 3px;
+}
+
+// Media query for mobile devices (up to 767px)
+@media (max-width: 767px) {
+  .name-product {
+    font-size: 0.9rem;
+  }
+  .text-rate-product,
+  .text-sold-product {
+    font-size: 11px;
+  }
+  .start-rate-product {
+    font-size: 0.6rem;
+  }
+
+  .text-price-product {
+    font-size: 15px;
+  }
+  .text-discount-product {
+    font-size: 12px;
+  }
+  .text-give-product {
+    font-size: 10px;
+  }
+  .text-time-delevery-product {
+    font-size: 11px;
+  }
+}
+
+// Media query for tablet devices (768px to 991px)
+@media (min-width: 768px) and (max-width: 991px) {
 }
