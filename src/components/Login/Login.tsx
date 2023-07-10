@@ -22,10 +22,11 @@ const Login = ({ handleCancel }: IPropsLogin) => {
   const onFinish = async (values: IValuesLogin) => {
     try {
       const acountLogin = await api.post("/user/sign-in", values);
-      console.log("acountLogin", acountLogin);
+      dispatch(updateUser(acountLogin?.data));
 
       if (acountLogin?.data?.access_token) {
         const decoded: any = jwt_decode(acountLogin?.data?.access_token);
+
         if (decoded?.id) {
           handleGetDetailsUser(decoded?.id, acountLogin?.data?.access_token);
         }
@@ -41,15 +42,10 @@ const Login = ({ handleCancel }: IPropsLogin) => {
     }
   };
 
-  const handleGetDetailsUser = async (id: any, token: any) => {
-    const res = await api.get(`/user/get-details/${id}`, {
-      headers: {
-        token: `Bearer ${token}`,
-      },
-    });
+  const handleGetDetailsUser = async (id: any, access_token: any) => {
+    const res = await api.get(`/user/get-details/${id}`);
     console.log("res", res.data.data);
-
-    dispatch(updateUser({ ...res?.data?.data, access_token: token }));
+    dispatch(updateUser({ ...res?.data?.data, access_token: access_token }));
   };
 
   const onFinishFailed = (errorInfo: any) => {

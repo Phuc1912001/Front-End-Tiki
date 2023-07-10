@@ -9,6 +9,8 @@ api.interceptors.request.use(
     (config) => {
         const _store = store.getState();
         const user = _store.user;
+        console.log('user.access_token trong api ', user.access_token);
+
         config.headers.Authorization = user?.access_token
             ? `Bearer ${user.access_token}`
             : '';

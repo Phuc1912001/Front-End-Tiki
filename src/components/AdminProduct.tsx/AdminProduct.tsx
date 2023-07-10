@@ -1,4 +1,4 @@
-import { Button, Form, Input, Upload } from "antd";
+import { Button, Form, Input, Upload, Popconfirm } from "antd";
 
 import {
   PlusOutlined,
@@ -19,9 +19,12 @@ import Loading from "../Loading/Loading";
 const AdminProduct = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isUpdateProduct, setIsUpdateProduct] = useState(false);
   const [avatar, setAvatar] = useState<any>("");
   const [products, setProducts] = useState<any>([]);
+  const [detailProduct, setDetailProduct] = useState<any>({});
 
+  const [rowSelected, setRowSelected] = useState("");
   const [form] = Form.useForm();
 
   const handleCancel = () => {
@@ -32,16 +35,32 @@ const AdminProduct = () => {
   const onFinish = async (values: any) => {
     setLoading(true);
     const newValues = { ...values, image: avatar };
-    const newProduct = await productService.createProduct(newValues);
-    if (newProduct?.status === "OK") {
-      message.success("Add Product Success");
-      handleCancel();
-      form.resetFields();
-      setAvatar("");
-      fetchDataProduct();
-    } else {
-      message.error(`${newProduct?.message}`);
+    console.log("newValues", newValues);
+
+    const requestProduct = isUpdateProduct
+      ? productService.updateProduct(detailProduct._id, newValues)
+      : productService.createProduct(newValues);
+
+    try {
+      const responseProduct = await requestProduct;
+      console.log("responseProduct", responseProduct);
+
+      if (isUpdateProduct) {
+        message.success("update Product Success");
+        handleCancel();
+        form.resetFields();
+        fetchDataProduct();
+      } else {
+        message.success("Add Product Success");
+        handleCancel();
+        form.resetFields();
+        setAvatar("");
+        fetchDataProduct();
+      }
+    } catch (error) {
+      message.error(`${error}`);
     }
+
     setLoading(false);
   };
 
@@ -67,19 +86,27 @@ const AdminProduct = () => {
     fetchDataProduct();
   }, []);
 
-  const renderAction = () => {
-    return (
-      <div>
-        <DeleteOutlined
-          style={{ color: "red", fontSize: "30px", cursor: "pointer" }}
-          // onClick={() => setIsModalOpenDelete(true)}
-        />
-        <EditOutlined
-          style={{ color: "orange", fontSize: "30px", cursor: "pointer" }}
-          //onClick={handleDetailsProduct}
-        />
-      </div>
-    );
+  const rowSelection = {
+    onSelect: (record: any) => {
+      setRowSelected(record._id);
+    },
+  };
+
+  const handleDetailsProduct = async (row: any) => {
+    setIsModalOpen(true);
+    form.setFieldsValue(row);
+    setAvatar(row.image);
+    setDetailProduct(row);
+    setIsUpdateProduct(true);
+  };
+
+  const confirm = async (row: any) => {
+    await productService.deleteProduct(row._id);
+    message.success("Delete is successfully");
+    fetchDataProduct();
+  };
+  const cancel = () => {
+    message.warning("Close Popconfirm ");
   };
 
   const columns = [
@@ -107,14 +134,49 @@ const AdminProduct = () => {
     {
       title: "Name",
       dataIndex: "name",
+      sorter: (a: any, b: any) => a.name.length - b.name.length,
     },
     {
       title: "Price",
       dataIndex: "price",
+      sorter: (a: any, b: any) => a.price - b.price,
+      filters: [
+        {
+          text: ">= 50",
+          value: ">=",
+        },
+        {
+          text: "<= 50",
+          value: "<=",
+        },
+      ],
+      onFilter: (value: string, record: any) => {
+        if (value === ">=") {
+          return record.price >= 50;
+        }
+        return record.price <= 50;
+      },
     },
     {
       title: "Rating",
       dataIndex: "rating",
+      sorter: (a: any, b: any) => a.rating - b.rating,
+      filters: [
+        {
+          text: ">= 3",
+          value: ">=",
+        },
+        {
+          text: "<= 3",
+          value: "<=",
+        },
+      ],
+      onFilter: (value: string, record: any) => {
+        if (value === ">=") {
+          return Number(record.rating) >= 3;
+        }
+        return Number(record.rating) <= 3;
+      },
     },
     {
       title: "Type",
@@ -123,7 +185,30 @@ const AdminProduct = () => {
     {
       title: "Action",
       dataIndex: "action",
-      render: renderAction,
+      render: (_: any, row: any) => (
+        <div className="d-flex gap-2">
+          <Button
+            type="dashed"
+            size="small"
+            onClick={() => handleDetailsProduct(row)}
+            icon={<EditOutlined />}
+          >
+            Edit
+          </Button>
+          <Popconfirm
+            title="Delete the task"
+            description="Are you sure to delete this task?"
+            onConfirm={() => confirm(row)}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button type="dashed" size="small" icon={<DeleteOutlined />} danger>
+              Delete
+            </Button>
+          </Popconfirm>
+        </div>
+      ),
     },
   ];
   const dataTable =
@@ -155,6 +240,7 @@ const AdminProduct = () => {
           columns={columns}
           isLoading={loading}
           data={dataTable}
+          rowSelection={rowSelection}
         />
       </div>
       <ModalComponent
@@ -256,9 +342,15 @@ const AdminProduct = () => {
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
+              {isUpdateProduct ? (
+                <Button type="primary" htmlType="submit">
+                  Update Product
+                </Button>
+              ) : (
+                <Button type="primary" htmlType="submit">
+                  Create Product
+                </Button>
+              )}
             </Form.Item>
           </Form>
         </Loading>
