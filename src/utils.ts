@@ -23,3 +23,20 @@ export const convertPrice = (price: any) => {
         return null
     }
 }
+
+export const renderOptions = (arr: any) => {
+    let results = []
+    if (arr) {
+        results = arr?.map((opt: any) => {
+            return {
+                value: opt,
+                label: opt
+            }
+        })
+    }
+    results.push({
+        label: 'Thêm type',
+        value: 'add_type'
+    })
+    return results
+}

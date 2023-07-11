@@ -3,26 +3,52 @@ import { Col, Row } from "react-bootstrap";
 import { Input, Rate } from "antd";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { formattedDate } from "../../services/formatDate";
+import { useParams } from "react-router-dom";
+import * as productService from "../../services/productSevice";
+import { useEffect, useState } from "react";
+import { IProduct } from "../../Type&Interface/ProductType";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Redux/type";
 
 const ProductDetail = () => {
-  const currentPrice = 58.0;
-  const discountRate = 25;
-  const originalPrice = currentPrice / (1 - discountRate / 100);
+  const { id } = useParams();
+  const [productDetail, setProductDetail] = useState<IProduct>();
+  const [numProduct, setNumProduct] = useState<number>(1);
+
+  const user: any = useSelector((store: RootState) => store.user);
+
+  const originalPrice =
+    productDetail?.price && productDetail?.discount
+      ? productDetail.price / (1 - productDetail.discount / 100)
+      : 0;
+
+  const fetchProductDetail = async () => {
+    const resProduct = await productService.getDetailsProduct(id);
+    setProductDetail(resProduct.data);
+  };
+  useEffect(() => {
+    fetchProductDetail();
+  }, [id]);
+
+  const handleChangeValueInput = (value: any) => {
+    setNumProduct(Number(value));
+  };
+
+  const handelIncrementProduct = () => {
+    setNumProduct(numProduct + 1);
+  };
+
+  const handelDecrementProduct = () => {
+    setNumProduct(numProduct - 1);
+  };
 
   return (
     <Row className="wrapper-product-detail p-2">
       <Col md={5}>
-        <img
-          src="https://salt.tikicdn.com/cache/750x750/ts/product/4d/4c/8a/f17cddb2d46a408ca7f719b1e0736485.jpg.webp"
-          alt=""
-          className="img-fluid"
-        />
+        <img src={productDetail?.image} alt="" className="img-fluid" />
       </Col>
       <Col md={7}>
-        <div className="title-product-detail">
-          Áo Thun Nam Ngắn Tay 5S CONFIDENT, Chất Liệu Cotton Thoáng Mát, Co
-          Giãn, Thiết Kế In Trẻ Trung (TSO23014)
-        </div>
+        <div className="title-product-detail">{productDetail?.name}</div>
         <div className="wrapper-rate-sold-product-detail mt-2">
           <Rate allowHalf defaultValue={4.5} className="rate-product-detail" />
           <div className="sold-product-detail">| Đã bán 17</div>
@@ -31,11 +57,15 @@ const ProductDetail = () => {
           <Col md={8}>
             <div className="wrapper-price-product-detail p-2">
               <div className="all-price-product-detail">
-                <div className="current-price-product-detail">58.000 đ </div>
+                <div className="current-price-product-detail">
+                  {productDetail?.price}.000 đ
+                </div>
                 <div className="cost-price-product-detail">
                   {originalPrice.toFixed(0)}.000 đ
                 </div>
-                <div className="discount-price-product-detail">-35%</div>
+                <div className="discount-price-product-detail">
+                  {productDetail?.discount}%
+                </div>
               </div>
               <div className="d-flex align-items-center mt-2">
                 <div className="wrapper-give-product-detail">
@@ -58,7 +88,7 @@ const ProductDetail = () => {
               </div>
             </div>
             <div className="mt-3 pt-3 text-delivery-product-detail">
-              Giao đến <span>H.Sóc Sơn,X.Mai Đình, Hà Nội</span>
+              Giao đến <span>{user?.address}</span>
             </div>
             <div className="mt-3 wrapper-time-price-delivery-product-detail p-2">
               <div>
@@ -77,7 +107,7 @@ const ProductDetail = () => {
             <div className="mt-3">
               <h6>Số Lượng</h6>
               <div className="group-btn-quantity-product-detail">
-                <div>
+                <div onClick={handelDecrementProduct}>
                   <img
                     src="https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/icons-remove.svg"
                     alt=""
@@ -85,9 +115,9 @@ const ProductDetail = () => {
                   />
                 </div>
 
-                <input value={1} />
+                <input value={numProduct} onChange={handleChangeValueInput} />
 
-                <div>
+                <div onClick={handelIncrementProduct}>
                   <img
                     src="https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/icons-add.svg"
                     alt=""

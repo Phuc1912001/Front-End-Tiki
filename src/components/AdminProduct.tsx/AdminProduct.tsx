@@ -1,5 +1,6 @@
-import { Button, Form, Input, Upload, Popconfirm } from "antd";
+import { Button, Form, Input, Upload, Popconfirm, Select } from "antd";
 
+import type { SelectProps } from "antd";
 import {
   PlusOutlined,
   DeleteOutlined,
@@ -9,7 +10,7 @@ import {
 } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 
-import { getBase64 } from "../../utils";
+import { getBase64, renderOptions } from "../../utils";
 import * as productService from "../../services/productSevice";
 import * as message from "../../components/Message/Message";
 import TableComponent from "../TableComponent/TableComponent";
@@ -22,6 +23,7 @@ const AdminProduct = () => {
   const [isUpdateProduct, setIsUpdateProduct] = useState(false);
   const [avatar, setAvatar] = useState<any>("");
   const [products, setProducts] = useState<any>([]);
+  const [typeProduct, setTypeProduct] = useState<any>([]);
   const [detailProduct, setDetailProduct] = useState<any>({});
 
   const [rowSelected, setRowSelected] = useState("");
@@ -30,11 +32,12 @@ const AdminProduct = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
     form.resetFields();
+    setAvatar("");
   };
 
   const onFinish = async (values: any) => {
     setLoading(true);
-    const newValues = { ...values, image: avatar };
+    const newValues = { ...values, image: avatar, type: values.type.join(" ") };
     console.log("newValues", newValues);
 
     const requestProduct = isUpdateProduct
@@ -85,6 +88,18 @@ const AdminProduct = () => {
   useEffect(() => {
     fetchDataProduct();
   }, []);
+
+  const fetchTypeProduct = async () => {
+    setLoading(true);
+    const res = await productService.getAllTypeProduct();
+    setTypeProduct(res.data);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchTypeProduct();
+    console.log("typeProduct", typeProduct);
+  }, [isModalOpen]);
 
   const rowSelection = {
     onSelect: (record: any) => {
@@ -219,6 +234,10 @@ const AdminProduct = () => {
 
   console.log("dataTable", dataTable);
 
+  const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
+
   return (
     <div>
       <h1>Quản lý sản phẩm</h1>
@@ -273,7 +292,13 @@ const AdminProduct = () => {
               name="type"
               rules={[{ required: true, message: "Please input your type!" }]}
             >
-              <Input />
+              <Select
+                mode="tags"
+                style={{ width: "100%" }}
+                onChange={handleChange}
+                tokenSeparators={[","]}
+                options={renderOptions(typeProduct)}
+              />
             </Form.Item>
             <Form.Item
               label="Price"

@@ -11,6 +11,7 @@ import AdminPage from "./Pages/AdminPage/AdminPage";
 import { useSelector } from "react-redux";
 import { RootState } from "./Redux/type";
 import ProductDetail from "./Pages/ProductDetail/ProductDetail";
+import TypeProductPage from "./Pages/TypeProductPage/TypeProductPage";
 
 function App() {
   const user = useSelector((state: RootState) => state.user);
@@ -54,6 +55,10 @@ function App() {
         {
           path: "product-detail/:id",
           element: <ProductDetail />,
+        },
+        {
+          path: "product/:type",
+          element: <TypeProductPage />,
         },
       ],
     },

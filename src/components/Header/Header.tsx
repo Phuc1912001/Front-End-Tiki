@@ -10,15 +10,18 @@ import {
   EnvironmentOutlined,
 } from "@ant-design/icons";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Login from "../Login/Login";
 import SignUp from "../Signup/SignUp";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../Redux/type";
 import { resetUser } from "../../Redux/Feature/userSlice";
 import * as message from "../Message/Message";
+import { searchProductGlobal } from "../../Redux/Feature/productSlice";
 
-const typeProducts = [
+import { getTypeProducts } from "../../Redux/Feature/typeProductSlice";
+
+const typeProductsA = [
   {
     id: 1,
     name: "trai cay",
@@ -43,9 +46,23 @@ const Header = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   const user: any = useSelector<RootState>((store) => store.user);
-  const dispatch = useDispatch<AppDispatch>();
+  const typeProducts: any = useSelector<RootState>(
+    (store) => store.typeProduct.typeProduct
+  );
+
+  console.log("typeProducts", typeProducts);
+
+  const dispatch = useDispatch<any>();
 
   const nav = useNavigate();
+
+  const fetchTypeProducts = () => {
+    dispatch(getTypeProducts());
+  };
+
+  useEffect(() => {
+    fetchTypeProducts();
+  }, []);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -77,6 +94,20 @@ const Header = () => {
 
   const handleNavToAdminPage = () => {
     nav("system/admin");
+  };
+
+  const handleSearchProduct = (e: any) => {
+    dispatch(searchProductGlobal(e.target.value));
+  };
+
+  const handleNavigatetype = (type: any) => {
+    nav(
+      `/product/${type
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        ?.replace(/ /g, "_")}`,
+      { state: type }
+    );
   };
 
   const content = (
@@ -120,6 +151,7 @@ const Header = () => {
             <Input
               className="input-search "
               placeholder="Phucki rẻ mỗi ngày,không chỉ một ngày"
+              onChange={handleSearchProduct}
             />
             <Button className="button-search">Tìm kiếm</Button>
           </div>
@@ -161,9 +193,13 @@ const Header = () => {
         <Col className="p-0" md={1}></Col>
         <Col className="p-xs-0" md={7}>
           <div className="wrapper-product-header">
-            {typeProducts.map((typeProduct) => (
-              <div key={typeProduct.id} className="text-product-header">
-                {typeProduct.name}
+            {typeProducts.map((typeProduct: any, index: number) => (
+              <div
+                key={index}
+                onClick={() => handleNavigatetype(typeProduct)}
+                className="text-product-header"
+              >
+                {typeProduct}
               </div>
             ))}
           </div>
@@ -172,7 +208,7 @@ const Header = () => {
           <div className="text-address-header">
             <EnvironmentOutlined />
             Giao đến:
-            <span>H.Sóc Sơn,X.Mai Đình,Hà Nội</span>
+            <span>{user?.address}</span>
           </div>
         </Col>
       </Row>

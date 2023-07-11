@@ -11,7 +11,7 @@ interface IpropProduct {
 }
 
 const ProductCard = ({ product }: IpropProduct) => {
-  console.log("products in product card ", product);
+  // console.log("products in product card ", product);
 
   const ContentBadgeOfficial = (
     <div className="text-content-badged-product">
@@ -28,11 +28,7 @@ const ProductCard = ({ product }: IpropProduct) => {
       >
         <Badge.Ribbon text={ContentBadgeOfficial} placement="start">
           <div className="product-wrapper p-2">
-            <img
-              src="https://salt.tikicdn.com/cache/280x280/ts/product/7f/a7/e6/84c2933a6526b4b161eb07f83ab463c5.jpg.webp"
-              alt=""
-              className="img-fluid"
-            />
+            <img src={product.image} alt="" className="img-fluid" />
             <div className="name-product">
               {product.name.length > 43
                 ? product.name.substring(0, 43) + "..."
@@ -43,10 +39,7 @@ const ProductCard = ({ product }: IpropProduct) => {
                 <div className="text-rate-product">{product.rating}</div>
                 <StarFilled className="start-rate-product" />
               </div>
-              <div className="text-sold-product">
-                {" "}
-                | Đã bán {product.selled}
-              </div>
+              <div className="text-sold-product">| Đã bán {product.selled}</div>
             </div>
             <div className="d-flex align-items-center gap-2 mt-2">
               <div className="text-price-product">{product.price} đ</div>
