@@ -5,6 +5,7 @@ import "./ProductCard.scss";
 import { IProduct } from "../../Type&Interface/ProductType";
 import { NavLink } from "react-router-dom";
 import { formattedDate } from "../../services/formatDate";
+import { convertPrice } from "../../utils";
 
 interface IpropProduct {
   product: IProduct;
@@ -42,7 +43,9 @@ const ProductCard = ({ product }: IpropProduct) => {
               <div className="text-sold-product">| Đã bán {product.selled}</div>
             </div>
             <div className="d-flex align-items-center gap-2 mt-2">
-              <div className="text-price-product">{product.price} đ</div>
+              <div className="text-price-product">
+                {convertPrice(product.price)}
+              </div>
               <div className="text-discount-product">{product.discount}%</div>
             </div>
             <div className="text-give-product">

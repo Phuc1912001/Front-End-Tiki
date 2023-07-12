@@ -15,6 +15,7 @@ import { createStateSyncMiddleware, initMessageListener } from 'redux-state-sync
 import userSlice from "./Feature/userSlice";
 import productSlice from "./Feature/productSlice";
 import typeProductSlice from "./Feature/typeProductSlice";
+import orderSlice from "./Feature/orderSlice";
 const reduxStateSyncConfig = {
     predicate: (action: any) => {
         const blacklist = [PERSIST, PURGE, REHYDRATE];
@@ -40,6 +41,7 @@ const persistedReducer = persistReducer(
         user: userSlice,
         product: productSlice,
         typeProduct: typeProductSlice,
+        order: orderSlice,
     })
 );
 

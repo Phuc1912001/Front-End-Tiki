@@ -12,9 +12,37 @@ import { useSelector } from "react-redux";
 import { RootState } from "./Redux/type";
 import ProductDetail from "./Pages/ProductDetail/ProductDetail";
 import TypeProductPage from "./Pages/TypeProductPage/TypeProductPage";
+import { createContext, useState } from "react";
+
+export const myModalContext = createContext(null);
 
 function App() {
   const user = useSelector((state: RootState) => state.user);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
+
+  const showModal = () => {
+    console.log("alo");
+
+    setIsModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const toggleLogin = () => {
+    setIsLogin(!isLogin);
+  };
+
+  const values: any = {
+    isModalOpen,
+    setIsModalOpen,
+    isLogin,
+    setIsLogin,
+    showModal,
+    handleCancel,
+    toggleLogin,
+  };
 
   const adminElement = user.isAdmin ? (
     <AdminPage />
@@ -67,7 +95,11 @@ function App() {
       element: <NotFound />,
     },
   ]);
-  return <RouterProvider router={router} />;
+  return (
+    <myModalContext.Provider value={values}>
+      <RouterProvider router={router} />
+    </myModalContext.Provider>
+  );
 }
 
 export default App;

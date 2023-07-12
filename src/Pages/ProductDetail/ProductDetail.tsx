@@ -5,10 +5,13 @@ import { CiDeliveryTruck } from "react-icons/ci";
 import { formattedDate } from "../../services/formatDate";
 import { useParams } from "react-router-dom";
 import * as productService from "../../services/productSevice";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { IProduct } from "../../Type&Interface/ProductType";
-import { useSelector } from "react-redux";
-import { RootState } from "../../Redux/type";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../Redux/type";
+import { myModalContext } from "../../App";
+import { addOrderProduct } from "../../Redux/Feature/orderSlice";
+import { convertPrice } from "../../utils";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -16,6 +19,11 @@ const ProductDetail = () => {
   const [numProduct, setNumProduct] = useState<number>(1);
 
   const user: any = useSelector((store: RootState) => store.user);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const myValuesContext: any = useContext(myModalContext);
+  const { isLogin, isModalOpen, showModal, toggleLogin, handleCancel } =
+    myValuesContext;
 
   const originalPrice =
     productDetail?.price && productDetail?.discount
@@ -42,6 +50,26 @@ const ProductDetail = () => {
     setNumProduct(numProduct - 1);
   };
 
+  const handleBuy = () => {
+    if (!user?.email) {
+      showModal();
+    } else {
+      dispatch(
+        addOrderProduct({
+          orderItem: {
+            name: productDetail?.name || "", // Provide a default value when productDetail?.name is undefined
+            amount: numProduct,
+            image: productDetail?.image || "",
+            price: productDetail?.price || 0,
+            product: productDetail?._id || "",
+            discount: productDetail?.discount || 0,
+            countInstock: productDetail?.countInStock || 0,
+          },
+        })
+      );
+    }
+  };
+
   return (
     <Row className="wrapper-product-detail p-2">
       <Col md={5}>
@@ -58,10 +86,10 @@ const ProductDetail = () => {
             <div className="wrapper-price-product-detail p-2">
               <div className="all-price-product-detail">
                 <div className="current-price-product-detail">
-                  {productDetail?.price}.000 đ
+                  {convertPrice(productDetail?.price)}
                 </div>
                 <div className="cost-price-product-detail">
-                  {originalPrice.toFixed(0)}.000 đ
+                  {convertPrice(originalPrice.toFixed(0))}
                 </div>
                 <div className="discount-price-product-detail">
                   {productDetail?.discount}%
@@ -127,7 +155,9 @@ const ProductDetail = () => {
               </div>
             </div>
             <div className="mt-3">
-              <button className="btn-buy-product-detail">Chọn mua</button>
+              <button className="btn-buy-product-detail" onClick={handleBuy}>
+                Chọn mua
+              </button>
             </div>
           </Col>
           <Col md={4}>D</Col>

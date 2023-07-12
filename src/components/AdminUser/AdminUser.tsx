@@ -1,10 +1,8 @@
 import { Button, Form, Input, Upload, Popconfirm } from "antd";
 
 import {
-  PlusOutlined,
   DeleteOutlined,
   EditOutlined,
-  SearchOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
 import { useEffect, useState } from "react";

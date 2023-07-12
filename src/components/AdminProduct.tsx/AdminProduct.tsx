@@ -1,15 +1,11 @@
 import { Button, Form, Input, Upload, Popconfirm, Select } from "antd";
-
-import type { SelectProps } from "antd";
 import {
   PlusOutlined,
   DeleteOutlined,
   EditOutlined,
-  SearchOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-
 import { getBase64, renderOptions } from "../../utils";
 import * as productService from "../../services/productSevice";
 import * as message from "../../components/Message/Message";
@@ -37,7 +33,9 @@ const AdminProduct = () => {
 
   const onFinish = async (values: any) => {
     setLoading(true);
-    const newValues = { ...values, image: avatar, type: values.type.join(" ") };
+    // Check if values.type is a string and convert it to an array
+    const type = Array.isArray(values.type) ? values.type : [values.type];
+    const newValues = { ...values, image: avatar, type: type.join(" ") };
     console.log("newValues", newValues);
 
     const requestProduct = isUpdateProduct

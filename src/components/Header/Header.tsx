@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import "./Header.scss";
-import { Input, Button, Badge, Modal, Popover } from "antd";
+import { Input, Button, Badge, Popover, Modal } from "antd";
 import {
   SearchOutlined,
   HomeOutlined,
@@ -10,7 +10,7 @@ import {
   EnvironmentOutlined,
 } from "@ant-design/icons";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Login from "../Login/Login";
 import SignUp from "../Signup/SignUp";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,36 +21,21 @@ import { searchProductGlobal } from "../../Redux/Feature/productSlice";
 
 import { getTypeProducts } from "../../Redux/Feature/typeProductSlice";
 
-const typeProductsA = [
-  {
-    id: 1,
-    name: "trai cay",
-  },
-  {
-    id: 2,
-    name: "banh my",
-  },
-  {
-    id: 3,
-    name: "bo sau",
-  },
-  {
-    id: 4,
-    name: "hai san",
-  },
-];
+import { myModalContext } from "../../App";
 
 const Header = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [isLogin, setIsLogin] = useState(true);
-
   const user: any = useSelector<RootState>((store) => store.user);
   const typeProducts: any = useSelector<RootState>(
     (store) => store.typeProduct.typeProduct
   );
+  const order: any = useSelector<RootState>((store) => store.order);
+  
 
   console.log("typeProducts", typeProducts);
+
+  const myValuesContext: any = useContext(myModalContext);
+  const { isLogin, isModalOpen, showModal, toggleLogin, handleCancel } =
+    myValuesContext;
 
   const dispatch = useDispatch<any>();
 
@@ -63,21 +48,6 @@ const Header = () => {
   useEffect(() => {
     fetchTypeProducts();
   }, []);
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-  const toggleLogin = () => {
-    setIsLogin(!isLogin);
-  };
 
   const handleLogOut = () => {
     dispatch(resetUser());
@@ -182,7 +152,7 @@ const Header = () => {
 
           <div>
             <NavLink to={"order"}>
-              <Badge count={5} size="small">
+              <Badge count={order?.orderItems.length} size="small">
                 <ShoppingCartOutlined className="order-header" />
               </Badge>
             </NavLink>

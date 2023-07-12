@@ -18,7 +18,7 @@ export const getBase64 = (file: any) =>
 export const convertPrice = (price: any) => {
     try {
         const result = price?.toLocaleString().replaceAll(',', '.')
-        return `${result} VND`
+        return `${result} đ`
     } catch (error) {
         return null
     }
@@ -40,3 +40,10 @@ export const renderOptions = (arr: any) => {
     })
     return results
 }
+
+
+
+
+
+
+
