@@ -10,6 +10,7 @@ import * as UserService from "../../services/userService";
 import { getBase64 } from "../../utils";
 import { updateUser } from "../../Redux/Feature/userSlice";
 import Loading from "../../components/Loading/Loading";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const user: any = useSelector((store: RootState) => store.user);
@@ -17,6 +18,8 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const [form] = Form.useForm();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const onFinish = async (values: any) => {
     console.log("values", values);
@@ -31,7 +34,7 @@ const Profile = () => {
       };
 
       const updateUserResponse = await UserService.updateUser(updateUserData);
-      console.log("updateUserResponse", updateUserResponse);
+
       dispatch(
         updateUser({
           ...updateUserResponse?.data,
@@ -39,6 +42,9 @@ const Profile = () => {
         })
       );
       message.success("update user thành công");
+      if (location?.state) {
+        navigate(location?.state);
+      }
     } catch (error) {
       // Xử lý lỗi
       message.error(`${error}`);
@@ -113,6 +119,9 @@ const Profile = () => {
                 { required: true, message: "Please input your Address!" },
               ]}
             >
+              <Input />
+            </Form.Item>
+            <Form.Item label="City" name="city">
               <Input />
             </Form.Item>
             <Form.Item

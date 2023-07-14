@@ -25,21 +25,8 @@ import { myModalContext } from "../../App";
 
 const Header = () => {
   const user: any = useSelector<RootState>((store) => store.user);
-  const typeProducts: any = useSelector<RootState>(
-    (store) => store.typeProduct.typeProduct
-  );
-  const order: any = useSelector<RootState>((store) => store.order);
-  
-
-  console.log("typeProducts", typeProducts);
-
-  const myValuesContext: any = useContext(myModalContext);
-  const { isLogin, isModalOpen, showModal, toggleLogin, handleCancel } =
-    myValuesContext;
 
   const dispatch = useDispatch<any>();
-
-  const nav = useNavigate();
 
   const fetchTypeProducts = () => {
     dispatch(getTypeProducts());
@@ -48,6 +35,18 @@ const Header = () => {
   useEffect(() => {
     fetchTypeProducts();
   }, []);
+  const typeProducts: any = useSelector<RootState>(
+    (store) => store.typeProduct.typeProduct
+  );
+  const order: any = useSelector<RootState>((store) => store.order);
+
+  console.log("typeProductsin header", typeProducts);
+
+  const myValuesContext: any = useContext(myModalContext);
+  const { isLogin, isModalOpen, showModal, toggleLogin, handleCancel } =
+    myValuesContext;
+
+  const nav = useNavigate();
 
   const handleLogOut = () => {
     dispatch(resetUser());
@@ -163,15 +162,19 @@ const Header = () => {
         <Col className="p-0" md={1}></Col>
         <Col className="p-xs-0" md={7}>
           <div className="wrapper-product-header">
-            {typeProducts.map((typeProduct: any, index: number) => (
-              <div
-                key={index}
-                onClick={() => handleNavigatetype(typeProduct)}
-                className="text-product-header"
-              >
-                {typeProduct}
-              </div>
-            ))}
+            {Array.isArray(typeProducts) ? (
+              typeProducts.map((typeProduct: any, index: number) => (
+                <div
+                  key={index}
+                  onClick={() => handleNavigatetype(typeProduct)}
+                  className="text-product-header"
+                >
+                  {typeProduct}
+                </div>
+              ))
+            ) : (
+              <div>Không có sản phẩm</div>
+            )}
           </div>
         </Col>
         <Col className="p-xs-0" md={4}>

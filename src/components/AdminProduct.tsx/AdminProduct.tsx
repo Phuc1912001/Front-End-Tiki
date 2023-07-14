@@ -79,7 +79,7 @@ const AdminProduct = () => {
 
   const fetchDataProduct = async () => {
     setLoading(true);
-    const res = await productService.getAllProduct({ limit: 5 });
+    const res = await productService.getAllProduct({ limit: 200 });
     setProducts(res.data);
     setLoading(false);
   };
@@ -88,10 +88,8 @@ const AdminProduct = () => {
   }, []);
 
   const fetchTypeProduct = async () => {
-    setLoading(true);
     const res = await productService.getAllTypeProduct();
     setTypeProduct(res.data);
-    setLoading(false);
   };
 
   useEffect(() => {

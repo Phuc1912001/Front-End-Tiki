@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Checkbox } from "antd";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
@@ -11,15 +11,23 @@ import {
   increaseAmount,
   removeAllOrderProduct,
   removeOrderProduct,
+  selectedOrder,
 } from "../../Redux/Feature/orderSlice";
 import { convertPrice } from "../../utils";
+import { useLocation, useNavigate } from "react-router-dom";
+import * as message from "../../components/Message/Message";
+import StepComponent from "../../components/StepComponent/StepComponent";
 
 const Order = () => {
   const [numProduct, setNumProduct] = useState<number>(1);
   const [listChecked, setListChecked] = useState<any>([]);
 
-  const orders: any = useSelector<RootState>((store) => store.order.orderItems);
-  console.log("orders in order", orders);
+  const location = useLocation();
+
+  const orders: any = useSelector<RootState>((store) => store.order);
+  const user: any = useSelector<RootState>((store) => store.user);
+
+  const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -36,7 +44,7 @@ const Order = () => {
   const handleOnchangeCheckAll = (e: any) => {
     if (e.target.checked) {
       const newListChecked: any = [];
-      orders?.forEach((item: any) => {
+      orders?.orderItems?.forEach((item: any) => {
         newListChecked.push(item?.product);
       });
       setListChecked(newListChecked);
@@ -46,18 +54,23 @@ const Order = () => {
   };
 
   const priceMemo = useMemo(() => {
-    const result = orders?.reduce((total: any, cur: any) => {
-      return total + cur.price * cur.amount;
-    }, 0);
+    const result = orders?.orderItemsSelected?.reduce(
+      (total: any, cur: any) => {
+        return total + cur.price * cur.amount;
+      },
+      0
+    );
     return result;
   }, [orders]);
-  console.log("priceMemo", priceMemo);
 
   const priceDiscountMemo = useMemo(() => {
-    const result = orders?.reduce((total: any, cur: any) => {
-      const totalDiscount = cur.discount ? cur.discount : 0;
-      return total + (priceMemo * (totalDiscount * cur.amount)) / 100;
-    }, 0);
+    const result = orders?.orderItemsSelected?.reduce(
+      (total: any, cur: any) => {
+        const totalDiscount = cur.discount ? cur.discount : 0;
+        return total + (priceMemo * totalDiscount) / 100;
+      },
+      0
+    );
     if (Number(result)) {
       return result;
     }
@@ -67,7 +80,10 @@ const Order = () => {
   const diliveryPriceMemo = useMemo(() => {
     if (priceMemo >= 20000 && priceMemo < 500000) {
       return 10000;
-    } else if (priceMemo >= 500000 || orders?.length === 0) {
+    } else if (
+      priceMemo >= 500000 ||
+      orders?.orderItemsSelected?.length === 0
+    ) {
       return 0;
     } else {
       return 20000;
@@ -106,16 +122,68 @@ const Order = () => {
     }
   };
 
+  useEffect(() => {
+    dispatch(selectedOrder({ listChecked }));
+  }, [listChecked]);
+
+  const handleAddCard = () => {
+    console.log(!orders?.orderItemsSlected?.length);
+
+    if (!orders?.orderItemsSelected?.length) {
+      message.error("Vui lòng chọn sản phẩm");
+    } else if (!user?.phone || !user.address || !user.name || !user.city) {
+      navigate("/profile", { state: location?.pathname });
+      message.error(
+        "làm ơn hãy điền đủ các thông tin Name , Phone , Address , City"
+      );
+    } else {
+      navigate("/payment");
+    }
+  };
+
+  const handleChangeAddress = () => {
+    navigate("/profile", { state: location?.pathname });
+  };
+
+  const itemsDelivery = [
+    {
+      title: "20.000 VND",
+      description: "Dưới 200.000 VND",
+    },
+    {
+      title: "10.000 VND",
+      description: "Từ 200.000 VND đến dưới 500.000 VND",
+    },
+    {
+      title: "Free ship",
+      description: "Trên 500.000 VND",
+    },
+  ];
+
   return (
     <Row>
       <Col md={9}>
         <Row className="p-2 wrapper-title-order">
+          <Col md={12}>
+            <StepComponent
+              items={itemsDelivery}
+              current={
+                diliveryPriceMemo === 10000
+                  ? 2
+                  : diliveryPriceMemo === 20000
+                  ? 1
+                  : orders?.orderItemsSelected.length === 0
+                  ? 0
+                  : 3
+              }
+            />
+          </Col>
           <Col md={5}>
             <Checkbox
               onChange={handleOnchangeCheckAll}
-              checked={listChecked?.length === orders?.length}
+              checked={listChecked?.length === orders?.orderItems?.length}
             >
-              Tất cả ({orders.length} sản phẩm)
+              Tất cả ({orders?.orderItems?.length} sản phẩm)
             </Checkbox>
           </Col>
           <Col
@@ -144,7 +212,7 @@ const Order = () => {
           </Col>
         </Row>
         <div className="p-2 mt-3 wrapper-title-order">
-          {orders.map((order: any, index: number) => (
+          {orders?.orderItems?.map((order: any, index: number) => (
             <Row>
               <Col md={5}>
                 <Checkbox
@@ -227,10 +295,14 @@ const Order = () => {
         </div>
       </Col>
       <Col md={3}>
+        <div>địa chỉ gaio hang:</div>
+        <div>{`${user?.address} - ${user?.city}`}</div>
+        <button onClick={handleChangeAddress}>đổi địa chỉ</button>
         <div>tạm tính :{convertPrice(priceMemo)} </div>
         <div>Giảm Giá : {convertPrice(priceDiscountMemo)} </div>
         <div>Phí giao hàng: {convertPrice(diliveryPriceMemo)} </div>
         <div>Total Price: {convertPrice(totalPriceMemo)} </div>
+        <button onClick={handleAddCard}>mua ngay</button>
       </Col>
     </Row>
   );

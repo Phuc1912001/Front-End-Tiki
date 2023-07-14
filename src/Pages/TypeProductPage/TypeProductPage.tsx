@@ -47,9 +47,10 @@ const TypeProductPage = () => {
 
   return (
     <div>
-      {typeProducts.map((typeProduct: IProduct) => (
-        <ProductCard product={typeProduct} />
-      ))}
+      {typeProducts &&
+        typeProducts.map((typeProduct: IProduct) => (
+          <ProductCard product={typeProduct} />
+        ))}
 
       <Pagination
         current={panigate.page}

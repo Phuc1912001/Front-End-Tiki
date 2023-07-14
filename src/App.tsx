@@ -13,6 +13,9 @@ import { RootState } from "./Redux/type";
 import ProductDetail from "./Pages/ProductDetail/ProductDetail";
 import TypeProductPage from "./Pages/TypeProductPage/TypeProductPage";
 import { createContext, useState } from "react";
+import PaymentPage from "./Pages/PaymentPage/PaymentPage";
+import OrderSucess from "./Pages/OrderSucess/OrderSucess";
+import DetailOrderPage from "./Pages/DetailOrderPage/DetailOrderPage";
 
 export const myModalContext = createContext(null);
 
@@ -76,6 +79,11 @@ function App() {
           path: "my-order",
           element: <MyOrder />,
         },
+
+        {
+          path: "/details-order/:id",
+          element: <DetailOrderPage />,
+        },
         {
           path: "system/admin",
           element: adminElement,
@@ -87,6 +95,14 @@ function App() {
         {
           path: "product/:type",
           element: <TypeProductPage />,
+        },
+        {
+          path: "payment",
+          element: <PaymentPage />,
+        },
+        {
+          path: "order-success",
+          element: <OrderSucess />,
         },
       ],
     },
