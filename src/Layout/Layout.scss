@@ -1,8 +1,15 @@
-
 .layout-container-header {
-    background-color:white;
+    background-color: white;
 }
 
 .layout-container-body {
     background-color: rgb(245, 245, 250);
 }
+
+@media (max-width: 767px) {
+    .sideBar-layout {
+        display: none;
+    }
+}
+
+

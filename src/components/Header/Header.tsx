@@ -10,11 +10,11 @@ import {
   EnvironmentOutlined,
 } from "@ant-design/icons";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import Login from "../Login/Login";
 import SignUp from "../Signup/SignUp";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../Redux/type";
+import { RootState } from "../../Redux/type";
 import { resetUser } from "../../Redux/Feature/userSlice";
 import * as message from "../Message/Message";
 import { searchProductGlobal } from "../../Redux/Feature/productSlice";
@@ -125,7 +125,7 @@ const Header = () => {
             <Button className="button-search">Tìm kiếm</Button>
           </div>
         </Col>
-        <Col className="p-xs-0 wrapper-menu-header " md={4}>
+        <Col className="p-xs-0 wrapper-menu-header pt-xs-3 " md={4}>
           <div className="menu-group-header">
             <NavLink to={"/"} className="item-menu-header">
               <HomeOutlined /> Trang chủ
@@ -149,7 +149,7 @@ const Header = () => {
             )}
           </div>
 
-          <div>
+          <div className="d-flex justify-content-center align-items-center pt-2">
             <NavLink to={"order"}>
               <Badge count={order?.orderItems.length} size="small">
                 <ShoppingCartOutlined className="order-header" />
@@ -158,7 +158,7 @@ const Header = () => {
           </div>
         </Col>
       </Row>
-      <Row className="p-2 pt-0">
+      <Row className="p-2 pt-0 row-under-header">
         <Col className="p-0" md={1}></Col>
         <Col className="p-xs-0" md={7}>
           <div className="wrapper-product-header">
@@ -181,7 +181,11 @@ const Header = () => {
           <div className="text-address-header">
             <EnvironmentOutlined />
             Giao đến:
-            <span>{user?.address}</span>
+            {user?.address ? (
+              <span>{user?.address}</span>
+            ) : (
+              <span>hãy đăng nhập ở tài khoản để có địa chỉ</span>
+            )}
           </div>
         </Col>
       </Row>

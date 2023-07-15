@@ -1,0 +1,33 @@
+.wrapper-acount-frofile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: white;
+    .form-profile {
+        width: 75%;
+    }
+}
+
+.ant-form-item-control-input-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+
+
+// Media query for mobile devices (up to 767px)
+@media (max-width: 767px) {
+    .column-sidebar-profile {
+            display: none;
+        }
+}
+
+// Media query for tablet devices (768px to 991px)
+@media (min-width: 768px) and (max-width: 991px) {
+    // .column-sidebar-profile {
+    //     display: none;
+    // }
+}

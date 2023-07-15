@@ -1,15 +1,15 @@
 import { Table } from "antd";
 
 const TableComponent = (props: any) => {
-  const { data, isLoading, columns, rowSelection } = props;
+  const { data, isLoading, columns } = props;
 
   return (
     <Table
-      rowSelection={rowSelection}
       columns={columns}
       loading={isLoading}
       dataSource={data}
       {...props}
+      scroll={{ x: "max-content" }}
     />
   );
 };

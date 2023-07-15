@@ -1,0 +1,12 @@
+.img-all-order {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+}
+
+// Media query for mobile devices (up to 767px)
+@media (max-width: 767px) {
+    .colum-sideBar-acount-none {
+        display: none;
+    }
+}

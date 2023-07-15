@@ -1,0 +1,14 @@
+.modal-content-wrapper {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+   .modal-content {
+    width: 60%;
+   }
+}
+
+.ant-modal-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

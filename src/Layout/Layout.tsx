@@ -24,10 +24,7 @@ const Layout = () => {
                   <Sidebar />
                 </Col>
               )}
-              <Col
-                md={location.pathname === "/" ? 10 : 12}
-                className={location.pathname === "/" ? "p-xs-0" : "p-0"}
-              >
+              <Col md={location.pathname === "/" ? 10 : 12}>
                 <div>
                   <Outlet />
                   <Footer />

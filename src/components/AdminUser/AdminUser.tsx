@@ -1,4 +1,4 @@
-import { Button, Form, Input, Upload, Popconfirm } from "antd";
+import { Button, Form, Input, Upload, Popconfirm, Col, Row } from "antd";
 
 import {
   DeleteOutlined,
@@ -132,6 +132,7 @@ const AdminUser = () => {
     {
       title: "Action",
       dataIndex: "action",
+      fixed: "right",
       render: (_: any, row: any) => (
         <div className="d-flex gap-2">
           <Button
@@ -139,9 +140,7 @@ const AdminUser = () => {
             size="small"
             onClick={() => handleDetailsUser(row)}
             icon={<EditOutlined />}
-          >
-            Edit
-          </Button>
+          ></Button>
           <Popconfirm
             title="Delete the task"
             description="Are you sure to delete this task?"
@@ -150,9 +149,12 @@ const AdminUser = () => {
             okText="Yes"
             cancelText="No"
           >
-            <Button type="dashed" size="small" icon={<DeleteOutlined />} danger>
-              Delete
-            </Button>
+            <Button
+              type="dashed"
+              size="small"
+              icon={<DeleteOutlined />}
+              danger
+            ></Button>
           </Popconfirm>
         </div>
       ),
@@ -168,95 +170,121 @@ const AdminUser = () => {
 
   return (
     <div>
-      <h1>Quản lý người dùng</h1>
+      <h4>Quản lý người dùng</h4>
 
       <div style={{ marginTop: "20px" }}>
         <TableComponent
           columns={columns}
           isLoading={loading}
           data={dataTable}
-          rowSelection={rowSelection}
         />
       </div>
-      <ModalComponent
-        forceRender
-        title="Add Product"
-        open={isModalOpen}
-        onCancel={handleCancel}
-        footer={null}
-      >
-        <Loading isLoading={loading}>
-          <Form
-            name="basic"
-            labelCol={{ span: 2 }}
-            wrapperCol={{ span: 22 }}
-            onFinish={onFinish}
-            autoComplete="on"
-            form={form}
+
+      <Row>
+        <Col xs={24} sm={24} md={20} lg={20} xl={20}>
+          <ModalComponent
+            forceRender
+            title="Update User"
+            isOpen={isModalOpen}
+            onCancel={handleCancel}
+            footer={null}
           >
-            <Form.Item
-              label="Name"
-              name="name"
-              rules={[{ required: true, message: "Please input your name!" }]}
-            >
-              <Input />
-            </Form.Item>
+            <Loading isLoading={loading}>
+              <Form
+                name="basic"
+                labelCol={{
+                  xs: { span: 24 },
+                  sm: { span: 8 },
+                  md: { span: 6 },
+                }}
+                wrapperCol={{
+                  xs: { span: 24 },
+                  sm: { span: 16 },
+                  md: { span: 18 },
+                }}
+                onFinish={onFinish}
+                autoComplete="on"
+                form={form}
+              >
+                <Form.Item
+                  label="Name"
+                  name="name"
+                  rules={[
+                    { required: true, message: "Please input your name!" },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
 
-            <Form.Item
-              label="Email"
-              name="email"
-              rules={[{ required: true, message: "Please input your email!" }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Phone"
-              name="phone"
-              rules={[{ required: true, message: "Please input your  phone!" }]}
-            >
-              <Input />
-            </Form.Item>
+                <Form.Item
+                  label="Email"
+                  name="email"
+                  rules={[
+                    { required: true, message: "Please input your email!" },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  label="Phone"
+                  name="phone"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your  phone!",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
 
-            <Form.Item
-              label="Adress"
-              name="address"
-              rules={[
-                { required: true, message: "Please input your  address!" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+                <Form.Item
+                  label="Adress"
+                  name="address"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your  address!",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
 
-            <Form.Item
-              label="Avatar"
-              name="avatar"
-              rules={[{ required: true, message: "Please input your image!" }]}
-            >
-              <Upload onChange={handleOnchangeAvatar} maxCount={1}>
-                <Button icon={<UploadOutlined />}>Select File</Button>
-                {avatar && (
-                  <img
-                    src={avatar}
-                    style={{
-                      height: "60px",
-                      width: "60px",
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                      marginLeft: "15px",
-                    }}
-                    alt="avatar"
-                  />
-                )}
-              </Upload>
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 20, span: 16 }}>
-              <Button type="primary" htmlType="submit">
-                Apply
-              </Button>
-            </Form.Item>
-          </Form>
-        </Loading>
-      </ModalComponent>
+                <Form.Item
+                  label="Avatar"
+                  name="avatar"
+                  rules={[
+                    { required: true, message: "Please input your image!" },
+                  ]}
+                >
+                  <Upload onChange={handleOnchangeAvatar} maxCount={1}>
+                    <Button icon={<UploadOutlined />}>Select File</Button>
+                    {avatar && (
+                      <img
+                        src={avatar}
+                        style={{
+                          height: "60px",
+                          width: "60px",
+                          borderRadius: "50%",
+                          objectFit: "cover",
+                          marginLeft: "15px",
+                        }}
+                        alt="avatar"
+                      />
+                    )}
+                  </Upload>
+                </Form.Item>
+                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                  <Button type="primary" htmlType="submit">
+                    Update User
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Loading>
+          </ModalComponent>
+        </Col>
+      </Row>
     </div>
   );
 };

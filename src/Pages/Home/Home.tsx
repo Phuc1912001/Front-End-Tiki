@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "./Home.scss";
 import { Carousel, Pagination } from "antd";
-import { imageUrlsCarousel } from "../../Image/Image";
+import { imageProductBrandHomes, imageUrlsCarousel } from "../../Image/Image";
 import { StarFilled, CheckOutlined } from "@ant-design/icons";
 
 import * as productService from "../../services/productSevice";
@@ -23,7 +23,7 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
-  const limit = 5;
+  const limit = 12;
 
   const fetchProductAll = async (searchProduct: string, page: number) => {
     setLoading(true);
@@ -44,8 +44,6 @@ const Home = () => {
   }, [searchDebounce, currentPage]);
 
   const handlePageChange = (page: number) => {
-    console.log("page change", page);
-
     setCurrentPage(page);
   };
   console.log("products", products);
@@ -57,7 +55,7 @@ const Home = () => {
           <Row>
             <Col md={9}>
               <Carousel autoplay>
-                {imageUrlsCarousel.map((imageUrlCarousel) => (
+                {imageUrlsCarousel.map((imageUrlCarousel: any) => (
                   <div className="mb-0" key={imageUrlCarousel.id}>
                     <img
                       src={imageUrlCarousel.imageUrlCarousel}
@@ -70,12 +68,34 @@ const Home = () => {
             </Col>
             <Col md={3}>
               <img
-                className="img-fluid image-near-carousel "
+                className="img-fluid image-near-carousel"
                 src="https://salt.tikicdn.com/ts/tikimsp/57/fb/4f/aa6df87b044c19d66f2a00adc7ff5564.png"
                 alt=""
               />
             </Col>
           </Row>
+        </Col>
+      </Row>
+      <Row className="mt-4">
+        <Col md={12}>
+          <div className="p-4 wraper-brand-product">
+            <div>
+              <div className="fw-bold">Thương hiệu chính hãng</div>
+            </div>
+            <div className="wrapper-img-product-brand mt-3">
+              <Row>
+                {imageProductBrandHomes.map((imageProductBrandHome: any) => (
+                  <Col md={2} key={imageProductBrandHome.id}>
+                    <img
+                      src={imageProductBrandHome.imgUrl}
+                      alt=""
+                      className="img-fluid"
+                    />
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          </div>
         </Col>
       </Row>
       <div className="pt-4">
@@ -85,12 +105,14 @@ const Home = () => {
               <ProductCard product={product} />
             ))}
           </Row>
-          <Pagination
-            current={currentPage}
-            total={totalPages}
-            pageSize={limit}
-            onChange={handlePageChange}
-          />
+          <div className="mt-3 text-center">
+            <Pagination
+              current={currentPage}
+              total={totalPages}
+              pageSize={limit}
+              onChange={handlePageChange}
+            />
+          </div>
         </Loading>
       </div>
     </Container>

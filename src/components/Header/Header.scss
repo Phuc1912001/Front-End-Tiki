@@ -200,8 +200,7 @@
 .item-content-popover-header {
     cursor: pointer;
     &:hover {
-    color: #0060ff;
-    
+        color: #0060ff;
     }
 }
 
@@ -211,9 +210,55 @@
     .right-modal-header {
         display: none;
     }
+    .row-under-header {
+        display: none !important;
+    }
+    .logo-phucki {
+        display: none;
+    }
+    .item-menu-header {
+        margin-top: 10px;
+        font-size: 13px;
+    }
+    .wrapper-menu-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
 }
 
 // Media query for tablet devices (768px to 991px)
 @media (min-width: 768px) and (max-width: 991px) {
     // Điều chỉnh CSS tại đây nếu bạn muốn thay đổi hiển thị trên tablet
+    .row-under-header {
+        display: none !important;
+    }
+
+    .item-menu-header {
+        gap: 3px;
+        font-size: 10px;
+        line-height: 150%;
+        font-weight: 500;
+        padding: 8px 5px;
+        border-radius: 8px;
+    }
+    .logo-phucki {
+        font-size: 1.2rem;
+    }
+}
+// Media query for tablet devices (768px to 991px)
+@media (min-width: 992px) and (max-width: 1115px) {
+    // Điều chỉnh CSS tại đây nếu bạn muốn thay đổi hiển thị trên tablet
+    .row-under-header {
+        display: none !important;
+    }
+
+    .item-menu-header {
+        gap: 4px;
+        font-size: 14px;
+        line-height: 150%;
+        font-weight: 500;
+        padding: 8px 5px;
+        border-radius: 8px;
+    }
 }

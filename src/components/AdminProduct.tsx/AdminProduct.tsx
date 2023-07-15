@@ -196,6 +196,7 @@ const AdminProduct = () => {
     {
       title: "Action",
       dataIndex: "action",
+      fixed: "right",
       render: (_: any, row: any) => (
         <div className="d-flex gap-2">
           <Button
@@ -203,9 +204,7 @@ const AdminProduct = () => {
             size="small"
             onClick={() => handleDetailsProduct(row)}
             icon={<EditOutlined />}
-          >
-            Edit
-          </Button>
+          ></Button>
           <Popconfirm
             title="Delete the task"
             description="Are you sure to delete this task?"
@@ -214,9 +213,12 @@ const AdminProduct = () => {
             okText="Yes"
             cancelText="No"
           >
-            <Button type="dashed" size="small" icon={<DeleteOutlined />} danger>
-              Delete
-            </Button>
+            <Button
+              type="dashed"
+              size="small"
+              icon={<DeleteOutlined />}
+              danger
+            ></Button>
           </Popconfirm>
         </div>
       ),
@@ -236,31 +238,20 @@ const AdminProduct = () => {
 
   return (
     <div>
-      <h1>Quản lý sản phẩm</h1>
+      <h4>Quản lý sản phẩm</h4>
       <div style={{ marginTop: "10px" }}>
-        <Button
-          style={{
-            height: "150px",
-            width: "150px",
-            borderRadius: "6px",
-            borderStyle: "dashed",
-          }}
-          onClick={() => setIsModalOpen(true)}
-        >
-          <PlusOutlined style={{ fontSize: "60px" }} />
-        </Button>
+        <Button onClick={() => setIsModalOpen(true)}>Thêm sản phẩm</Button>
       </div>
       <div style={{ marginTop: "20px" }}>
         <TableComponent
           columns={columns}
           isLoading={loading}
           data={dataTable}
-          rowSelection={rowSelection}
         />
       </div>
       <ModalComponent
         forceRender
-        title="Add Product"
+        title={`${isUpdateProduct ? "Sửa sản phẩm" : "Thêm sản phẩm"}`}
         open={isModalOpen}
         onCancel={handleCancel}
         footer={null}

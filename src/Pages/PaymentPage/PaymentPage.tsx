@@ -13,6 +13,7 @@ import * as message from "../../components/Message/Message";
 import type { RadioChangeEvent } from "antd";
 import { Radio } from "antd";
 import * as orderService from "../../services/orderService";
+import Loading from "../../components/Loading/Loading";
 
 const PaymentPage = () => {
   const location = useLocation();
@@ -23,6 +24,7 @@ const PaymentPage = () => {
 
   const [delivery, setDelivery] = useState("fast");
   const [payment, setPayment] = useState("later_money");
+  const [loading, setLoading] = useState(false);
 
   const handleDilivery = (e: RadioChangeEvent) => {
     setDelivery(e.target.value);
@@ -56,7 +58,18 @@ const PaymentPage = () => {
     return 0;
   }, [orders]);
 
-  const diliveryPriceMemo = 10000;
+  const diliveryPriceMemo = useMemo(() => {
+    if (priceMemo >= 20000 && priceMemo < 500000) {
+      return 10000;
+    } else if (
+      priceMemo >= 500000 ||
+      orders?.orderItemsSelected?.length === 0
+    ) {
+      return 0;
+    } else {
+      return 20000;
+    }
+  }, [priceMemo]);
 
   const totalPriceMemo = useMemo(() => {
     return (
@@ -65,6 +78,7 @@ const PaymentPage = () => {
   }, [priceMemo, priceDiscountMemo, diliveryPriceMemo]);
 
   const handleAddOrder = async () => {
+    setLoading(true);
     if (
       orders?.orderItemsSelected &&
       user?.name &&
@@ -113,45 +127,83 @@ const PaymentPage = () => {
         console.log("error khi tạo", error);
       }
     }
+    setLoading(false);
   };
 
   const handleChangeAddress = () => {
     navigate("/profile", { state: location?.pathname });
   };
   return (
-    <Row>
-      <Col md={9}>
-        <div>
-          <Radio.Group onChange={handleDilivery} value={delivery}>
-            <Radio value="fast">
-              <span style={{ color: "#ea8500", fontWeight: "bold" }}>FAST</span>
-              Giao hàng tiết kiệm
-            </Radio>
-            <Radio value="gojek">
-              <span style={{ color: "#ea8500", fontWeight: "bold" }}>
-                GO_JEK
-              </span>
-              Giao hàng tiết kiệm
-            </Radio>
-          </Radio.Group>
-        </div>
-        <div>
-          <Radio.Group onChange={handlePayment} value={payment}>
-            <Radio value="later_money">Thanh toán tiền mặt khi nhận hàng</Radio>
-          </Radio.Group>
-        </div>
-      </Col>
-      <Col md={3}>
-        <div>địa chỉ gaio hang:</div>
-        <div>{`${user?.address} - ${user?.city}`}</div>
-        <button onClick={handleChangeAddress}>đổi địa chỉ</button>
-        <div>tạm tính :{convertPrice(priceMemo)} </div>
-        <div>Giảm Giá : {convertPrice(priceDiscountMemo)} </div>
-        <div>Phí giao hàng: {convertPrice(diliveryPriceMemo)} </div>
-        <div>Total Price: {convertPrice(totalPriceMemo)} </div>
-        <button onClick={handleAddOrder}>mua luôn</button>
-      </Col>
-    </Row>
+    <Loading isLoading={loading}>
+      <Row>
+        <Col md={9}>
+          <div>
+            <Radio.Group
+              onChange={handleDilivery}
+              value={delivery}
+              className="d-flex flex-column p-4 gap-4 bg-white"
+            >
+              <Radio value="fast">
+                <span style={{ color: "#ea8500", fontWeight: "bold" }}>
+                  FAST
+                </span>
+                Giao hàng tiết kiệm
+              </Radio>
+              <Radio value="gojek">
+                <span style={{ color: "#ea8500", fontWeight: "bold" }}>
+                  GO_JEK
+                </span>
+                Giao hàng tiết kiệm
+              </Radio>
+            </Radio.Group>
+          </div>
+          <div className="p-4 bg-white mt-3">
+            <Radio.Group onChange={handlePayment} value={payment}>
+              <Radio value="later_money">
+                Thanh toán tiền mặt khi nhận hàng
+              </Radio>
+            </Radio.Group>
+          </div>
+        </Col>
+        <Col md={3}>
+          <div className="wrapper-address-order p-2">
+            <div className="d-flex align-items-center justify-content-between">
+              <div>Giao tới:</div>
+              <button onClick={handleChangeAddress}>Thay đổi</button>
+            </div>
+            <div>{`${user?.address} - ${user?.city}`}</div>
+          </div>
+
+          <div className="bg-white p-2 mt-2 text-secondary">
+            <div className="price-order-responsive">
+              <div>Tạm Tính :</div>
+              <div className="text-dark fw-bold">
+                {" "}
+                {convertPrice(priceMemo)}
+              </div>
+            </div>
+            <div className="price-order-responsive">
+              <div>Giảm Giá :</div>
+              <div>{convertPrice(priceDiscountMemo)}</div>
+            </div>
+            <div className="price-order-responsive">
+              <div>Phí giao hàng:</div>
+              <div>{convertPrice(diliveryPriceMemo)}</div>
+            </div>
+            <hr />
+            <div className="price-order-responsive">
+              <div>Tổng Tiền:</div>
+              <div className="text-danger fw-bold">
+                {convertPrice(totalPriceMemo)}
+              </div>
+            </div>
+          </div>
+          <button className="btn-buy-order mt-3 p-3 " onClick={handleAddOrder}>
+            Đặt Hàng
+          </button>
+        </Col>
+      </Row>
+    </Loading>
   );
 };
 

@@ -1,57 +1,80 @@
 .text-title-footer {
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 500;
-    color: rgb(56, 56, 61);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: rgb(56, 56, 61);
 }
 
 .text-content-footer {
-    color: rgb(128, 128, 137);
-    font-size: 13px;
-    
+  color: rgb(128, 128, 137);
+  font-size: 13px;
 }
 
 .no-right-padding-footer-aboutTiki {
-    padding-right: 0 !important;
+  padding-right: 0 !important;
 }
 
 .certification-footer {
-    width: 37px;
+  width: 37px;
 }
 .image-method-footer {
-    width: 30px;
-    object-fit: cover;
+  width: 30px;
+  object-fit: cover;
 }
 
 .wrapper-image-method-footer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .text-title-delyver-footer {
-    font-size: 15px;
-        line-height: 24px;
-        font-weight: 600;
-        color: rgb(56, 56, 61);
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 600;
+  color: rgb(56, 56, 61);
 }
 
 .image-tikiNow-footer {
-    width: 75%;
-    object-fit: cover;
+  width: 75%;
+  object-fit: cover;
 }
 .image-facebook-footer {
-    width: 32px;
-    height: 32px;
+  width: 32px;
+  height: 32px;
 }
 .image-youtube-footer {
-    width: 40px;
-    height: 40px;
+  width: 40px;
+  height: 40px;
 }
 .image-zalo-footer {
-    width: 32px;
-    height: 32px;
+  width: 32px;
+  height: 32px;
 }
 .img-QRcode-footer {
-    width: 35%;
+  width: 35%;
+}
+
+// Media query for mobile devices (up to 767px)
+@media (max-width: 767px) {
+  .no-right-padding-footer-aboutTiki {
+    padding-right: 12px !important;
+  }
+
+  .image-tikiNow-footer {
+    width: 25%;
+    object-fit: cover;
+  }
+
+  .img-QRcode-footer {
+    width: 25%;
+    height: 25% !important;
+  }
+  .img-app-footer {
+    width: 55%;
+  }
+}
+
+// Media query for tablet devices (768px to 991px)
+@media (min-width: 768px) and (max-width: 991px) {
 }

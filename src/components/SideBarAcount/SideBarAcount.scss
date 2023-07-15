@@ -1,0 +1,30 @@
+.img-sideBar-acount {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    img {
+        width: 30px;
+        border-radius: 50%;
+    }
+    .name-sidebar-acount {
+        font-size: 11px;
+        strong {
+            font-size: 10px;
+        }
+    }
+}
+
+.item-sideBar-acount {
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgb(235, 235, 240);
+    }
+    div {
+        font-size: 13px;
+    }
+}
+
+.activeSideBarAcount {
+    background-color: rgb(235, 235, 240);
+}

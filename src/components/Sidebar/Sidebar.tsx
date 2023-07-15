@@ -9,7 +9,7 @@ const Sidebar = () => {
     <div className="wrapper-sideBar ">
       <div className="wrapper-item-sidebar p-2">
         <h6>Nổi bật</h6>
-        {imageSideBarOfOutStandings.map((imageSideBarOfOutStanding) => (
+        {imageSideBarOfOutStandings.map((imageSideBarOfOutStanding: any) => (
           <div className="item-sidebar" key={imageSideBarOfOutStanding.id}>
             <img
               src={imageSideBarOfOutStanding.imageOutStanding}
@@ -24,7 +24,7 @@ const Sidebar = () => {
       </div>
       <div className="wrapper-item-sidebar p-2 mt-3">
         <h6>Danh mục</h6>
-        {imageSideBarOfCategorys.map((imageSideBarOfCategory) => (
+        {imageSideBarOfCategorys.map((imageSideBarOfCategory: any) => (
           <div className="item-sidebar" key={imageSideBarOfCategory.id}>
             <img
               src={imageSideBarOfCategory.imageCategory}

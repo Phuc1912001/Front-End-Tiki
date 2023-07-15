@@ -6,9 +6,15 @@
   padding: 1px;
   background-color: white;
   border-radius: 5px;
+  height: 390px;
   cursor: pointer;
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
   }
 }
 
@@ -70,8 +76,14 @@
 
 // Media query for mobile devices (up to 767px)
 @media (max-width: 767px) {
+  .product-wrapper {
+      height: 330px;
+      img {
+        height: 150px;
+      }
+    }
   .name-product {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
   .text-rate-product,
   .text-sold-product {
@@ -82,7 +94,7 @@
   }
 
   .text-price-product {
-    font-size: 15px;
+    font-size: 14px;
   }
   .text-discount-product {
     font-size: 12px;
@@ -97,4 +109,40 @@
 
 // Media query for tablet devices (768px to 991px)
 @media (min-width: 768px) and (max-width: 991px) {
+  .product-wrapper {
+    height: 350px;
+    img {
+      height: 140px;
+    }
+  }
+
+     .name-product {
+       font-size: 0.9rem;
+     }
+  
+     .text-rate-product,
+     .text-sold-product {
+       font-size: 11px;
+     }
+  
+     .start-rate-product {
+       font-size: 0.6rem;
+     }
+  
+     .text-price-product {
+       font-size: 15px;
+     }
+  
+     .text-discount-product {
+       font-size: 12px;
+     }
+  
+     .text-give-product {
+       font-size: 10px;
+     }
+  
+     .text-time-delevery-product {
+       font-size: 11px;
+     }
 }
+

@@ -9,6 +9,8 @@ import { useState } from "react";
 import AdminUser from "../../components/AdminUser/AdminUser";
 import AdminProduct from "../../components/AdminProduct.tsx/AdminProduct";
 import AdminOrder from "../../components/AdminOrder/AdminOrder";
+import "./AdminPage.scss";
+import { Row, Col } from "react-bootstrap";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -57,20 +59,20 @@ const AdminPage = () => {
   };
 
   return (
-    <div style={{ display: "flex", overflowX: "hidden" }}>
-      <Menu
-        onClick={onClick}
-        style={{ width: 256 }}
-        selectedKeys={keySelected} // Thay đổi thành selectedKeys
-        defaultOpenKeys={keySelected} // Vẫn giữ nguyên defaultOpenKeys nếu cần thiết
-        mode="inline"
-        items={items}
-      />
-      <div style={{ flex: 1, padding: "15px 0 15px 15px" }}>
+    <Row className="m-0">
+      <Col md={3} sm={12}>
+        <Menu
+          onClick={onClick}
+          selectedKeys={keySelected} // Thay đổi thành selectedKeys
+          defaultOpenKeys={keySelected} // Vẫn giữ nguyên defaultOpenKeys nếu cần thiết
+          mode="inline"
+          items={items}
+        />
+      </Col>
+      <Col md={9} sm={12}>
         {renderPage(keySelected[0])}
-        {/* Access the first element of the array */}
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };
 

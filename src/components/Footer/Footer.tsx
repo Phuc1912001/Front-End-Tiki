@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <Container>
       <Row className="bg-white mt-5 p-2">
-        <Col md={2} className="p-0">
+        <Col md={2} sm={12} className="p-md-0">
           <h4 className="text-title-footer">Hỗ trợ khách hàng</h4>
           {supportCustomers.map((supportCustomer) => (
             <div key={supportCustomer.id} className="mt-2">
@@ -23,7 +23,7 @@ const Footer = () => {
           ))}
         </Col>
 
-        <Col md={2} className="no-right-padding-footer-aboutTiki">
+        <Col md={2} sm={12} className="no-right-padding-footer-aboutTiki">
           <h4 className="text-title-footer">Về Tiki</h4>
           {aboutTikis.map((aboutTiki) => (
             <div key={aboutTiki.id} className="mt-2">
@@ -33,7 +33,7 @@ const Footer = () => {
             </div>
           ))}
         </Col>
-        <Col md={3}>
+        <Col md={3} sm={12}>
           <h4 className="text-title-footer">Hợp Tác Và Liên Kết</h4>
           <p className="text-content-footer">Quy chế hoạt động sàn GDTMDT</p>
           <p className="text-content-footer">Bán hàng cùng Tiki</p>
@@ -49,7 +49,7 @@ const Footer = () => {
             alt="a"
           />
         </Col>
-        <Col md={2}>
+        <Col md={2} sm={12}>
           <h4 className="text-title-footer">Phương Thức Thanh Toán</h4>
           <div className="wrapper-image-method-footer">
             {imgMethodFooters.map((imgMethodFooter) => (
@@ -69,7 +69,7 @@ const Footer = () => {
             alt="a"
           />
         </Col>
-        <Col md={3}>
+        <Col md={3} sm={12}>
           <h4 className="text-title-footer mb-4">Kết Nối Với Chúng Tôi</h4>
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"
@@ -99,12 +99,12 @@ const Footer = () => {
               <img
                 src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/appstore.png"
                 alt=""
-                className="img-fluid"
+                className="img-fluid img-app-footer"
               />
               <img
                 src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/playstore.png"
                 alt=""
-                className="img-fluid mt-1"
+                className="img-fluid mt-1 img-app-footer"
               />
             </div>
           </div>

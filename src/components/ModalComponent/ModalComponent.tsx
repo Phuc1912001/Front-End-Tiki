@@ -1,5 +1,5 @@
 import { Modal } from "antd";
-
+import "./ModalComponent.scss";
 const ModalComponent = ({
   title = "Modal",
   isOpen = false,
@@ -8,7 +8,9 @@ const ModalComponent = ({
 }: any) => {
   return (
     <Modal title={title} open={isOpen} {...rests}>
-      {children}
+      <div className="modal-content-wrapper">
+        <div className="modal-content">{children}</div>
+      </div>
     </Modal>
   );
 };
