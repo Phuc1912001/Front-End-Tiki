@@ -16,6 +16,15 @@
     width: 100%;
     object-fit: cover;
   }
+  .name-product {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-wrap: break-word;
+    -webkit-box-orient: vertical;
+  }
 }
 
 .name-product {
@@ -77,11 +86,11 @@
 // Media query for mobile devices (up to 767px)
 @media (max-width: 767px) {
   .product-wrapper {
-      height: 330px;
-      img {
-        height: 150px;
-      }
+    height: 330px;
+    img {
+      height: 150px;
     }
+  }
   .name-product {
     font-size: 0.8rem;
   }
@@ -116,33 +125,32 @@
     }
   }
 
-     .name-product {
-       font-size: 0.9rem;
-     }
-  
-     .text-rate-product,
-     .text-sold-product {
-       font-size: 11px;
-     }
-  
-     .start-rate-product {
-       font-size: 0.6rem;
-     }
-  
-     .text-price-product {
-       font-size: 15px;
-     }
-  
-     .text-discount-product {
-       font-size: 12px;
-     }
-  
-     .text-give-product {
-       font-size: 10px;
-     }
-  
-     .text-time-delevery-product {
-       font-size: 11px;
-     }
-}
+  .name-product {
+    font-size: 0.9rem;
+  }
 
+  .text-rate-product,
+  .text-sold-product {
+    font-size: 11px;
+  }
+
+  .start-rate-product {
+    font-size: 0.6rem;
+  }
+
+  .text-price-product {
+    font-size: 15px;
+  }
+
+  .text-discount-product {
+    font-size: 12px;
+  }
+
+  .text-give-product {
+    font-size: 10px;
+  }
+
+  .text-time-delevery-product {
+    font-size: 11px;
+  }
+}

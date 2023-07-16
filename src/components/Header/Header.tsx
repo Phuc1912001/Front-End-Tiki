@@ -76,7 +76,13 @@ const Header = () => {
       { state: type }
     );
   };
+  const handleNavLogo = () => {
+    nav("/");
+  };
 
+  const handleShowModalAddress = () => {
+    showModal();
+  };
   const content = (
     <div>
       <div
@@ -109,7 +115,7 @@ const Header = () => {
   return (
     <Container>
       <Row className="p-2">
-        <Col className="p-0 logo-phucki" md={1}>
+        <Col className="p-0 logo-phucki" md={1} onClick={handleNavLogo}>
           PhucKi
         </Col>
         <Col className="p-xs-0" md={7}>
@@ -182,7 +188,9 @@ const Header = () => {
             {user?.address ? (
               <span>{user?.address}</span>
             ) : (
-              <span>hãy đăng nhập ở tài khoản để có địa chỉ</span>
+              <span onClick={handleShowModalAddress}>
+                hãy đăng nhập ở tài khoản để có địa chỉ
+              </span>
             )}
           </div>
         </Col>
