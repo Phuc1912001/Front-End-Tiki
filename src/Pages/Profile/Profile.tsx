@@ -147,13 +147,7 @@ const Profile = () => {
                 <Form.Item label="City" name="city">
                   <Input />
                 </Form.Item>
-                <Form.Item
-                  label="Avatar"
-                  name="avatar"
-                  rules={[
-                    { required: true, message: "Please input your Avatar!" },
-                  ]}
-                >
+                <Form.Item label="Avatar" name="avatar">
                   <Upload onChange={handleOnchangeAvatar} maxCount={1}>
                     <Button icon={<UploadOutlined />}>Select File</Button>
                   </Upload>

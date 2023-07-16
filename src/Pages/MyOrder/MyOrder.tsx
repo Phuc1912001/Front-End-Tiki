@@ -37,6 +37,10 @@ const MyOrder = () => {
     fetchMyOrders();
   }, []);
 
+  useEffect(() => {
+    fetchMyOrders();
+  }, [user]);
+
   const handleDetailOrder = (id: any) => {
     nav(`/details-order/${id}`);
   };
