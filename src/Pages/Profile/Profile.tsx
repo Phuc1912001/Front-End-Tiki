@@ -1,11 +1,9 @@
 import "./Profile.scss";
-
 import { Row, Col, Button, Upload, Form, Input, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../Redux/type";
 import { useEffect, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
-
 import * as UserService from "../../services/userService";
 import { getBase64 } from "../../utils";
 import { updateUser } from "../../Redux/Feature/userSlice";

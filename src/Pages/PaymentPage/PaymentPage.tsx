@@ -1,12 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import "./PaymentPage.scss";
 import { AppDispatch, RootState } from "../../Redux/type";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  removeAllOrderProduct,
-  selectedOrder,
-} from "../../Redux/Feature/orderSlice";
+import { removeAllOrderProduct } from "../../Redux/Feature/orderSlice";
 import { convertPrice } from "../../utils";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as message from "../../components/Message/Message";
@@ -65,7 +62,7 @@ const PaymentPage = () => {
       priceMemo >= 500000 ||
       orders?.orderItemsSelected?.length === 0
     ) {
-      return 0;
+      return 5000;
     } else {
       return 20000;
     }

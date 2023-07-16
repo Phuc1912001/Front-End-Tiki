@@ -6,7 +6,7 @@ import "./Sidebar.scss";
 
 const Sidebar = () => {
   return (
-    <div className="wrapper-sideBar ">
+    <div className="wrapper-sideBar">
       <div className="wrapper-item-sidebar p-2">
         <h6>Nổi bật</h6>
         {imageSideBarOfOutStandings.map((imageSideBarOfOutStanding: any) => (

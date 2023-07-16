@@ -14,7 +14,6 @@ interface OrderContant {
 const OrderSucess = () => {
   const location = useLocation();
   const { state } = location;
-  console.log("state", state);
 
   return (
     <Row>

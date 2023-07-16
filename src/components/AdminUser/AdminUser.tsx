@@ -1,12 +1,10 @@
 import { Button, Form, Input, Upload, Popconfirm, Col, Row } from "antd";
-
 import {
   DeleteOutlined,
   EditOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-
 import { getBase64 } from "../../utils";
 import * as userService from "../../services/userService";
 import * as message from "../../components/Message/Message";
@@ -17,12 +15,10 @@ import Loading from "../Loading/Loading";
 const AdminUser = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const [avatar, setAvatar] = useState<any>("");
   const [users, setUsers] = useState<any>([]);
   const [detailUser, setDetailUser] = useState<any>({});
 
-  const [rowSelected, setRowSelected] = useState("");
   const [form] = Form.useForm();
 
   const handleCancel = () => {
@@ -74,12 +70,6 @@ const AdminUser = () => {
   useEffect(() => {
     fetchDataUsers();
   }, []);
-
-  const rowSelection = {
-    onSelect: (record: any) => {
-      setRowSelected(record._id);
-    },
-  };
 
   const handleDetailsUser = async (row: any) => {
     console.log("row in admin user", row);

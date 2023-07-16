@@ -1,10 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "./Home.scss";
 import { Carousel, Pagination } from "antd";
 import { imageProductBrandHomes, imageUrlsCarousel } from "../../Image/Image";
-import { StarFilled, CheckOutlined } from "@ant-design/icons";
-
 import * as productService from "../../services/productSevice";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { IProduct, IProductArray } from "../../Type&Interface/ProductType";
@@ -85,7 +83,12 @@ const Home = () => {
             <div className="wrapper-img-product-brand mt-3">
               <Row>
                 {imageProductBrandHomes.map((imageProductBrandHome: any) => (
-                  <Col md={2} key={imageProductBrandHome.id}>
+                  <Col
+                    md={2}
+                    xs={6}
+                    key={imageProductBrandHome.id}
+                    className="mt-3"
+                  >
                     <img
                       src={imageProductBrandHome.imgUrl}
                       alt=""

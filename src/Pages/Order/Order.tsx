@@ -17,6 +17,7 @@ import { convertPrice } from "../../utils";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as message from "../../components/Message/Message";
 import StepComponent from "../../components/StepComponent/StepComponent";
+import { IUser } from "../../Type&Interface/UserType";
 
 const Order = () => {
   const [numProduct, setNumProduct] = useState<number>(1);
@@ -84,7 +85,7 @@ const Order = () => {
       priceMemo >= 500000 ||
       orders?.orderItemsSelected?.length === 0
     ) {
-      return 0;
+      return 5000;
     } else {
       return 20000;
     }
@@ -159,7 +160,7 @@ const Order = () => {
       description: "Từ 200k đến 500k",
     },
     {
-      title: "Free ship",
+      title: "5k",
       description: "Trên 500k ",
     },
   ];

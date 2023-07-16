@@ -18,9 +18,7 @@ import { RootState } from "../../Redux/type";
 import { resetUser } from "../../Redux/Feature/userSlice";
 import * as message from "../Message/Message";
 import { searchProductGlobal } from "../../Redux/Feature/productSlice";
-
 import { getTypeProducts } from "../../Redux/Feature/typeProductSlice";
-
 import { myModalContext } from "../../App";
 
 const Header = () => {

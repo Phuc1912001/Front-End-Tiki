@@ -25,13 +25,12 @@ const ProductDetail = () => {
   const [productDetail, setProductDetail] = useState<IProduct>();
   const [numProduct, setNumProduct] = useState<number>(1);
   const [loading, setLoading] = useState(false);
-  console.log("productDetail", productDetail);
 
   const user: any = useSelector((store: RootState) => store.user);
   const dispatch = useDispatch<AppDispatch>();
 
   const myValuesContext: any = useContext(myModalContext);
-  const { showModal, toggleLogin, handleCancel } = myValuesContext;
+  const { showModal } = myValuesContext;
 
   const originalPrice =
     productDetail?.price && productDetail?.discount

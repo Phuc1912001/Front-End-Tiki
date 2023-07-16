@@ -9,13 +9,14 @@ import { SiKickstarter } from "react-icons/si";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/type";
+import { IUser } from "../../Type&Interface/UserType";
 
 const SideBarAcount = () => {
   const [activeProfile, setActiveProfile] = useState(false);
   const [activeMyOrder, setActiveMyOrder] = useState(false);
   const location = useLocation();
   const nav = useNavigate();
-  const user: any = useSelector((store: RootState) => store.user);
+  const user: IUser = useSelector((store: RootState) => store.user);
 
   const handleNavigateInfoAcount = () => {
     nav("/profile");

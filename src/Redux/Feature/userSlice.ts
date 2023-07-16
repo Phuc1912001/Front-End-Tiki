@@ -10,7 +10,6 @@ const initialState = {
     id: '',
     isAdmin: false,
     city: '',
-    refreshToken: ''
 }
 
 export const userSlide = createSlice({

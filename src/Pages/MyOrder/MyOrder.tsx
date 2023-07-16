@@ -11,9 +11,10 @@ import SideBarAcount from "../../components/SideBarAcount/SideBarAcount";
 import { Button } from "antd";
 import { convertPrice } from "../../utils";
 import Loading from "../../components/Loading/Loading";
+import { IUser } from "../../Type&Interface/UserType";
 
 const MyOrder = () => {
-  const user: any = useSelector((store: RootState) => store.user);
+  const user: IUser = useSelector((store: RootState) => store.user);
   const [loading, setLoading] = useState(false);
 
   const [myOrders, setMyOrders] = useState([]);
@@ -21,9 +22,14 @@ const MyOrder = () => {
 
   const fetchMyOrders = async () => {
     setLoading(true);
-    const resMyOrder = await orderService.getOrderByUserId(user?.id);
-    console.log("resMyOrder", resMyOrder);
-    setMyOrders(resMyOrder.data);
+    try {
+      const resMyOrder = await orderService.getOrderByUserId(user?.id);
+      console.log("resMyOrder", resMyOrder);
+      setMyOrders(resMyOrder.data);
+    } catch (error) {
+      console.log("error", error);
+    }
+
     setLoading(false);
   };
 

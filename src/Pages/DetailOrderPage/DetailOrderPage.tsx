@@ -10,7 +10,6 @@ import "./DetailOrderPage.scss";
 const DetailOrderPage = () => {
   const params = useParams();
   const { id } = params;
-
   const [orderDetail, setOrderDetail] = useState<any>();
   const [loading, setLoading] = useState(false);
 

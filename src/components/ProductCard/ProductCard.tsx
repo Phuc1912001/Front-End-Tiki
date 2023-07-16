@@ -12,15 +12,12 @@ interface IpropProduct {
 }
 
 const ProductCard = ({ product }: IpropProduct) => {
-  // console.log("products in product card ", product);
-
   const ContentBadgeOfficial = (
     <div className="text-content-badged-product">
       <CheckOutlined />
       <div>Offical</div>
     </div>
   );
-
   return (
     <Col md={3} sm={6} xs={6} className="mt-3" key={product._id}>
       <NavLink

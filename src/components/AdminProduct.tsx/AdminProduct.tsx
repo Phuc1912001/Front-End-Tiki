@@ -1,6 +1,5 @@
 import { Button, Form, Input, Upload, Popconfirm, Select } from "antd";
 import {
-  PlusOutlined,
   DeleteOutlined,
   EditOutlined,
   UploadOutlined,
@@ -33,7 +32,6 @@ const AdminProduct = () => {
 
   const onFinish = async (values: any) => {
     setLoading(true);
-    // Check if values.type is a string and convert it to an array
     const type = Array.isArray(values.type) ? values.type : [values.type];
     const newValues = { ...values, image: avatar, type: type.join(" ") };
     console.log("newValues", newValues);
@@ -41,7 +39,6 @@ const AdminProduct = () => {
     const requestProduct = isUpdateProduct
       ? productService.updateProduct(detailProduct._id, newValues)
       : productService.createProduct(newValues);
-
     try {
       const responseProduct = await requestProduct;
       console.log("responseProduct", responseProduct);
@@ -96,12 +93,6 @@ const AdminProduct = () => {
     fetchTypeProduct();
     console.log("typeProduct", typeProduct);
   }, [isModalOpen]);
-
-  const rowSelection = {
-    onSelect: (record: any) => {
-      setRowSelected(record._id);
-    },
-  };
 
   const handleDetailsProduct = async (row: any) => {
     setIsModalOpen(true);
@@ -230,17 +221,19 @@ const AdminProduct = () => {
       return { ...product, key: product._id };
     });
 
-  console.log("dataTable", dataTable);
-
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
+  };
+  const handleaddProduct = () => {
+    setIsModalOpen(true);
+    setIsUpdateProduct(false);
   };
 
   return (
     <div>
       <h4>Quản lý sản phẩm</h4>
       <div style={{ marginTop: "10px" }}>
-        <Button onClick={() => setIsModalOpen(true)}>Thêm sản phẩm</Button>
+        <Button onClick={handleaddProduct}>Thêm sản phẩm</Button>
       </div>
       <div style={{ marginTop: "20px" }}>
         <TableComponent

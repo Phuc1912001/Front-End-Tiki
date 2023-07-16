@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import * as orderService from "../../services/orderService";
-import { useSelector } from "react-redux";
-import { RootState } from "../../Redux/type";
 import { convertPrice, orderContant } from "../../utils";
 import TableComponent from "../TableComponent/TableComponent";
 
@@ -11,8 +9,6 @@ type PaymentMethods = {
 };
 
 const AdminOrder = () => {
-  const user = useSelector((state: RootState) => state?.user);
-
   const [allOrderAdmin, setAllOrderAdmin] = useState<any>([]);
   const [loading, setLoading] = useState(false);
 

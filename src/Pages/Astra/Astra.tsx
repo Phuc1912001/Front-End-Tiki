@@ -1,5 +1,5 @@
 const Astra = () => {
-  return <div>Astra</div>;
+  return <div>comming soon</div>;
 };
 
 export default Astra;
